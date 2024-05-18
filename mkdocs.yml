@@ -1,0 +1,14 @@
+site_name: Green Retail Learning Center
+site_url: https://green-retail.com/learning-center/
+theme:
+  name: material
+  palette:
+    primary: green
+    accent: light-green
+  font:
+    text: "Roboto"
+    code: "Roboto Mono"
+  logo:
+    icon: "school"
+    text: "Green Retail Learning Center"
+  favicon: "images/favicon.ico"
