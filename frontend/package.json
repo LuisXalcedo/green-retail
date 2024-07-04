@@ -11,6 +11,7 @@
   "type": "module",
   "dependencies": {
     "@fluentui/react-components": "^9.54.0",
+    "@fluentui/react-nav-preview": "^0.5.0",
     "fluentui-next-appdir-directive": "^0.1.5",
     "next": "14.1.1",
     "react": "^18",

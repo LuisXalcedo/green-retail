@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { exo_2 } from "@/app/components/fonts";
 import "./globals.css";
 
 // 👇 import the providers
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "Green Retail",
   description: "Point of Sale by Green Retail",
+  keywords: ["Retail", "Point of Sale"],
 };
 
 export default function RootLayout({
@@ -19,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${exo_2.className} antialiased`}
+        suppressHydrationWarning={true}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
