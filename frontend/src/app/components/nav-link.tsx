@@ -31,7 +31,10 @@ import {
   PersonMoney20Filled,
   bundleIcon,
 } from "@fluentui/react-icons";
-import Link from "next/link";
+// import Link from "next/link";
+import { Link } from "@/navigation";
+
+import { useTranslations } from "next-intl";
 
 const useStyles = makeStyles({
   root: {
@@ -60,6 +63,8 @@ const Salesperson = bundleIcon(PersonMoney20Regular, PersonMoney20Filled);
 type DrawerType = Required<DrawerProps>["type"];
 
 export const NavLinks = (props: Partial<NavDrawerProps>) => {
+  const t = useTranslations("NavLinks");
+
   const styles = useStyles();
 
   const labelId = useId("type-label");
@@ -78,18 +83,18 @@ export const NavLinks = (props: Partial<NavDrawerProps>) => {
   return (
     <div className={styles.root}>
       <NavDrawer
-        defaultSelectedValue="0"
-        defaultSelectedCategoryValue="0"
+        defaultSelectedValue="1"
+        defaultSelectedCategoryValue="1"
         open={isOpen}
         type={type}
         size="medium"
       >
         <NavDrawerHeader>{renderHamburgerWithToolTip()}</NavDrawerHeader>
         <NavDrawerBody>
-          <NavSectionHeader>Home</NavSectionHeader>
-          <Link key={"Salesperson"} href="/salespersons">
+          <NavSectionHeader>{t("home")}</NavSectionHeader>
+          <Link href="/salespersons/create">
             <NavItem icon={<Salesperson />} value={"1"}>
-              {"Salesperson"}
+              {t("salesperson")}
             </NavItem>
           </Link>
         </NavDrawerBody>

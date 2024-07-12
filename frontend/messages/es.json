@@ -1,0 +1,33 @@
+{
+  "NotFoundPage": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe."
+  },
+  "NavLinks": {
+    "home": "Home",
+    "salesperson": "Vendedor"
+  },
+  "Address": {
+    "address": "Dirección",
+    "address2": "Dirección 2",
+    "country": "País",
+    "city": "Ciudad",
+    "state": "Estado",
+    "zip_code": "Código Postal"
+  },
+  "SalespersonCreate": {
+    "Salesperson-Information": "Información del Vendedor",
+    "Salesperson-Address": "Dirección del Vendedor"
+  },
+  "Salesperson-Information": {
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "id-employee": "Id Empleado",
+    "commission": "Comisión",
+    "phone": "Teléfono",
+    "email": "Email",
+    "bloqued": "Bloqueado",
+    "created-at": "Creado en",
+    "updated-at": "Actualizado en"
+  }
+}

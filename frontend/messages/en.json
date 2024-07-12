@@ -1,0 +1,33 @@
+{
+  "NotFoundPage": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist."
+  },
+  "NavLinks": {
+    "home": "Home",
+    "salesperson": "Salesperson"
+  },
+  "Address": {
+    "address": "Address",
+    "address2": "Address 2",
+    "country": "Country",
+    "city": "City",
+    "state": "State",
+    "zip_code": "Zip Code"
+  },
+  "SalespersonCreate": {
+    "Salesperson-Information": "Salesperson Information",
+    "Salesperson-Address": "Salesperson Address"
+  },
+  "Salesperson-Information": {
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "id-employee": "Id Employee",
+    "commission": "Commission",
+    "phone": "Phone",
+    "email": "Email",
+    "bloqued": "Bloqued",
+    "created-at": "Created At",
+    "updated-at": "Updated At"
+  }
+}
