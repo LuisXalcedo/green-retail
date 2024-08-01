@@ -1,10 +1,7 @@
 from pydantic import EmailStr as Email
-
 from typing import Union, Optional
-
 from odmantic import Model, Field, Index
 from odmantic.query import asc, desc
-
 from datetime import datetime
 
 from ..models.address import Address

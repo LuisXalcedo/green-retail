@@ -3,9 +3,26 @@
     "title": "Página no encontrada",
     "description": "La página que buscas no existe."
   },
+  "Login": {
+    "title": "Iniciar Sesión",
+    "email": "Email",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "submit": "Iniciar Sesión"
+  },
+  "Toolbar": {
+    "new": "Nuevo",
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
   "NavLinks": {
     "home": "Home",
-    "salesperson": "Vendedor"
+    "salesperson": "Vendedor",
+    "logout": "Cerrar Sesión"
+  },
+  "LocaleSwitcher": {
+    "label": "Cambiar Idioma",
+    "locale": "{locale, select, en {🇺🇸 Inglés} es {🇪🇸 Español} other {Unknown}}"
   },
   "Address": {
     "address": "Dirección",

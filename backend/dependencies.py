@@ -8,7 +8,8 @@ from jwt.exceptions import InvalidTokenError
 
 from .models.user import UserInDB, User
 from .models.token import TokenData
-from .utils.security import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, verify_password
+from .config.config import settings
+from .utils.security import create_access_token, verify_password
 
 class CommonQueryParams:
     def __init__(self, q: str | None = None, skip: int = 0, limit: int = 100):
@@ -48,13 +49,15 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         headers={"WWW-Authenticate": "Bearer"},
     )
     try: 
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         username: str | None = payload.get("sub")
         if username is None:
             raise credentials_exception
         token_data = TokenData(username=username)
     except InvalidTokenError:
         raise credentials_exception
+    
+    # TODO: Add logic to get the user from MongoDB
     user = get_user(fake_users_db, username=token_data.username or "")
     if user is None:
         raise credentials_exception

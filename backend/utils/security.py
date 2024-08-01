@@ -1,15 +1,9 @@
 from datetime import datetime, timedelta, timezone
-
 import jwt
 from passlib.context import CryptContext
+from ..config.config import settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-# to get a string like this run:
-# openssl rand -hex 32
-SECRET_KEY = "c3b281fb127028ec747073a7e22c9477fc807a5a1255c9aa613367acda08b440"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
@@ -18,7 +12,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt 
 
 def verify_password(plain_password, hashed_password):

@@ -37,4 +37,12 @@ export const pathnames = {
     en: "/salespersons/[id]/details",
     es: "/vendedores/[id]/detalles",
   },
+  "/login": {
+    en: "/login",
+    es: "/iniciar-sesion",
+  },
+  "/logout": {
+    en: "/logout",
+    es: "/cerrar-sesion",
+  },
 } satisfies Pathnames<typeof locales>;

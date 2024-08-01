@@ -3,9 +3,26 @@
     "title": "Page Not Found",
     "description": "The page you are looking for does not exist."
   },
+  "Login": {
+    "title": "Login",
+    "email": "Email",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Login"
+  },
+  "Toolbar": {
+    "new": "New",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
   "NavLinks": {
     "home": "Home",
-    "salesperson": "Salesperson"
+    "salesperson": "Salesperson",
+    "logout": "Logout"
+  },
+  "LocaleSwitcher": {
+    "label": "Change Language",
+    "locale": "{locale, select, en {🇺🇸 English} es {🇪🇸 Spanish} other {Unknown}}"
   },
   "Address": {
     "address": "Address",

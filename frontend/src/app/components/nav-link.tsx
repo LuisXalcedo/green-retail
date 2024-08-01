@@ -29,6 +29,8 @@ import {
 import {
   PersonMoney20Regular,
   PersonMoney20Filled,
+  Power20Regular,
+  Power20Filled,
   bundleIcon,
 } from "@fluentui/react-icons";
 // import Link from "next/link";
@@ -59,6 +61,7 @@ const useStyles = makeStyles({
 });
 
 const Salesperson = bundleIcon(PersonMoney20Regular, PersonMoney20Filled);
+const Logout = bundleIcon(Power20Regular, Power20Filled);
 
 type DrawerType = Required<DrawerProps>["type"];
 
@@ -95,6 +98,14 @@ export const NavLinks = (props: Partial<NavDrawerProps>) => {
           <Link href="/salespersons/create">
             <NavItem icon={<Salesperson />} value={"1"}>
               {t("salesperson")}
+            </NavItem>
+          </Link>
+
+          <NavDivider />
+
+          <Link href="/logout">
+            <NavItem icon={<Logout />} value={"2"}>
+              {t("logout")}
             </NavItem>
           </Link>
         </NavDrawerBody>
