@@ -13,7 +13,6 @@ import {
 import type { ToolbarProps } from "@fluentui/react-components";
 
 import { useTranslations } from "next-intl";
-import { on } from "events";
 
 interface ToolbarFormProps {
   onNewClick: () => void;

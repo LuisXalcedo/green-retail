@@ -8,7 +8,8 @@
     "email": "Email",
     "username": "Username",
     "password": "Password",
-    "submit": "Login"
+    "submit": "Login",
+    "greeting": "Welcome to Green Retail"
   },
   "Toolbar": {
     "new": "New",

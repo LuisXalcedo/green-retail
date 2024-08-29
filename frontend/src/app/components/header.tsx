@@ -1,7 +1,9 @@
+import Image from "next/image";
+
 export default function Header() {
   return (
     <>
-      <h1>Green Retail</h1>
+      <Image src={"/logo.png"} alt="Green Retail" width={32} height={32} />
     </>
   );
 }

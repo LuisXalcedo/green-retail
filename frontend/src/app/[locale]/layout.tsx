@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 import { exo_2 } from "@/app/components/fonts";
-// import "./globals.css";
 
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
 // 👇 import the providers
 import { Providers } from "@/app/providers";
-
-import Header from "@/app/components/header";
 
 export const metadata: Metadata = {
   title: "Green Retail",
@@ -29,11 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`${exo_2.className} antialiased`}
-        suppressHydrationWarning={true}
-      >
-        <Header />
+      <body className={`${exo_2.className} `} suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <Providers>{children}</Providers>
         </NextIntlClientProvider>

@@ -33,9 +33,7 @@ import {
   Power20Filled,
   bundleIcon,
 } from "@fluentui/react-icons";
-// import Link from "next/link";
 import { Link } from "@/navigation";
-
 import { useTranslations } from "next-intl";
 
 const useStyles = makeStyles({

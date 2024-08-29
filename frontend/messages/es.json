@@ -8,7 +8,8 @@
     "email": "Email",
     "username": "Usuario",
     "password": "Contraseña",
-    "submit": "Iniciar Sesión"
+    "submit": "Iniciar Sesión",
+    "greeting": "Bienvenido a Green Retail"
   },
   "Toolbar": {
     "new": "Nuevo",

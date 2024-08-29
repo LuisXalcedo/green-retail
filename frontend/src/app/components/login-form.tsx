@@ -19,15 +19,19 @@ import { useTranslations } from "next-intl";
 
 const useStyles = makeStyles({
   root: {
+    // Stack the label above the field
     display: "flex",
     flexDirection: "column",
-    gap: "20px",
-    maxWidth: "400px",
-    "> div": { display: "flex", flexDirection: "column", gap: "20px" },
+    // Use 2px gap below the label (per the design system)
+    gap: "2px",
+    // Prevent from taking the full width of the page (optional)
+    maxWidth: "300px",
   },
-  wrapper: {
-    columnGap: "15px",
-    display: "flex",
+  input: {
+    width: "300px",
+  },
+  outerWrapper: {
+    marginTop: "15px",
   },
 });
 
@@ -67,46 +71,47 @@ export default function LoginForm() {
   };
 
   const onChangeUsername: InputProps["onChange"] = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    data: any
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setUsername(data.value);
+    setUsername(e.target.value);
   };
 
   const onChangePassword: InputProps["onChange"] = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    data: any
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setPassword(data.value);
+    setPassword(e.target.value);
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.root}>
-      <div>
-        <Field label={t("username")} required>
-          <Input
-            id={usernameId}
-            type="text"
-            name="username"
-            value={username}
-            onChange={onChangeUsername}
-          />
-        </Field>
-        <Field label={t("password")} required>
-          <Input
-            id={passwordId}
-            type="password"
-            name="password"
-            value={password}
-            onChange={onChangePassword}
-          />
-        </Field>
-        <div className={styles.wrapper}>
-          <Button type="submit" appearance="primary">
-            {t("submit")}
-          </Button>
-        </div>
-      </div>
+    <form onSubmit={handleSubmit}>
+      <Field label={t("username")} required>
+        <Input
+          id={usernameId}
+          type="text"
+          name="username"
+          value={username}
+          onChange={onChangeUsername}
+          className={styles.input}
+        />
+      </Field>
+      <Field label={t("password")} required>
+        <Input
+          id={passwordId}
+          type="password"
+          name="password"
+          value={password}
+          onChange={onChangePassword}
+          className={styles.input}
+        />
+      </Field>
+      <Button
+        type="submit"
+        appearance="primary"
+        size="large"
+        className={styles.outerWrapper}
+      >
+        {t("submit")}
+      </Button>
     </form>
   );
 }
