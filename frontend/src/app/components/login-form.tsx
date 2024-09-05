@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LoginForm() {
+export default function LoginForm(props: InputProps) {
   const t = useTranslations("Login");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -84,7 +84,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field label={t("username")} required>
+      <Field id={usernameId} label={t("username")} required>
         <Input
           id={usernameId}
           type="text"
@@ -92,9 +92,10 @@ export default function LoginForm() {
           value={username}
           onChange={onChangeUsername}
           className={styles.input}
+          autoComplete="off"
         />
       </Field>
-      <Field label={t("password")} required>
+      <Field id={passwordId} label={t("password")} required>
         <Input
           id={passwordId}
           type="password"

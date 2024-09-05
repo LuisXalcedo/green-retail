@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { Suspense } from "react";
+// import { Suspense } from "react";
 import { makeStyles, Text, tokens } from "@fluentui/react-components";
 
 import GreenRetailLogo from "@/app/components/GreenRetailLogo";
@@ -45,9 +45,9 @@ export default function LoginPage() {
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.verticalSpacing}>
-          <Suspense fallback={<GreenRetailLogoSkeleton />}>
-            <GreenRetailLogo />
-          </Suspense>
+          {/* <Suspense fallback={<GreenRetailLogoSkeleton />}> */}
+          <GreenRetailLogo />
+          {/* </Suspense> */}
         </div>
         <div>
           <Text size={500} weight="medium">

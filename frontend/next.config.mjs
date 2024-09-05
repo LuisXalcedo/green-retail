@@ -10,6 +10,7 @@ const nextConfig = {
     swcPlugins: [
       ["fluentui-next-appdir-directive", { paths: ["@griffel", "@fluentui"] }],
     ],
+    // ppr: true,
   },
   reactStrictMode: false,
 };

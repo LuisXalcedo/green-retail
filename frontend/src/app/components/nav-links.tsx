@@ -35,6 +35,7 @@ import {
 } from "@fluentui/react-icons";
 import { Link } from "@/navigation";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -70,8 +71,8 @@ export const NavLinks = (props: Partial<NavDrawerProps>) => {
 
   const labelId = useId("type-label");
 
-  const [isOpen, setIsOpen] = React.useState(true);
-  const [type, setType] = React.useState<DrawerType>("inline");
+  const [isOpen, setIsOpen] = useState(true);
+  const [type, setType] = useState<DrawerType>("inline");
 
   const renderHamburgerWithToolTip = () => {
     return (

@@ -48,6 +48,7 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
+          id="name"
           value={props.name || ""}
           onChange={props.onChangeName}
           disabled={disabled}

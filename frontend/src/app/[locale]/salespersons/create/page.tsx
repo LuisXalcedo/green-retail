@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionHeader,
   AccordionItem,
   AccordionPanel,
   AccordionToggleEventHandler,
-  Toolbar,
 } from "@fluentui/react-components";
 import { useTranslations } from "next-intl";
 
@@ -17,26 +17,30 @@ import { ToolbarForm } from "@/app/components/toolbar-form";
 import { Salesperson } from "@/app/lib/definitions";
 import { createSalesperson } from "@/app/lib/api";
 import withAuth from "@/app/components/WrappedComponent";
+import { useRouter } from "@/navigation";
 
-const CreateSalespersonPage = () => {
-  const t = useTranslations("SalespersonCreate");
+const Page = () => {
+  const t = useTranslations("Salesperson");
+  const router = useRouter();
 
-  const [openItems, setOpenItems] = React.useState(["1"]);
+  const [isClient, setIsClient] = useState(false);
+
+  const [openItems, setOpenItems] = useState(["1"]);
   const handleToggle: AccordionToggleEventHandler<string> = (event, data) => {
-    setOpenItems(data.openItems);
+    setOpenItems(data.openItems as string[]);
   };
 
-  const [id, setId] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [name2, setName2] = React.useState("");
-  const [id_employee, setIdEmployee] = React.useState<number>(0);
-  const [comission, setComission] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [bloqued, setBloqued] = React.useState(false);
-  const [createAt, setCreateAt] = React.useState("");
-  const [updateAt, setUpdateAt] = React.useState("");
-  const [address, setAddress] = React.useState<{
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [name2, setName2] = useState("");
+  const [id_employee, setIdEmployee] = useState<number>(0);
+  const [comission, setComission] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [bloqued, setBloqued] = useState(false);
+  const [createAt, setCreateAt] = useState("");
+  const [updateAt, setUpdateAt] = useState("");
+  const [address, setAddress] = useState<{
     address?: string | undefined;
     address2?: string | undefined;
     country?: string | undefined;
@@ -44,6 +48,15 @@ const CreateSalespersonPage = () => {
     state?: string | undefined;
     zip_code?: string | undefined;
   }>({});
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    // Render a loading state or nothing on the server
+    return null;
+  }
 
   const handleCreateSalesperson = async () => {
     const salesperson: Salesperson = {
@@ -67,24 +80,11 @@ const CreateSalespersonPage = () => {
       const data = await createSalesperson(salesperson);
       console.log("Response from createSalesperson:", data);
 
-      // Actualiza el estado con los datos recibidos
-      setId(data.id || "");
-      setName(data.name || "");
-      setName2(data.name2 || "");
-      setIdEmployee(data.id_employee || 0);
-      setComission(data.comission ? data.comission.toString() : "");
-      setPhone(data.phone || "");
-      setEmail(data.email || "");
-      setBloqued(data.bloqued || false);
-      setCreateAt(data.created_at || "");
-      setUpdateAt(data.updated_at || "");
-      setAddress({
-        address: data.address.address || "",
-        address2: data.address.address2 || "",
-        country: data.address.country || "",
-        city: data.address.city || "",
-        state: data.address.state || "",
-        zip_code: data.address.zip_code || "",
+      // Redirect to the salesperson page
+
+      router.push({
+        pathname: "/salespersons/[id]/edit",
+        params: { id: data.id },
       });
     } catch (error) {
       console.error("Error al crear el vendedor", error);
@@ -171,4 +171,4 @@ const CreateSalespersonPage = () => {
   );
 };
 
-export default withAuth(CreateSalespersonPage);
+export default withAuth(Page);
