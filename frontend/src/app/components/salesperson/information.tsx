@@ -10,23 +10,24 @@ import type { FieldProps, SwitchProps } from "@fluentui/react-components";
 import { useTranslations } from "next-intl";
 
 interface InformationSalespersonProps {
-  onChangeName: (event: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
-  onChangeName2: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeName: (event: React.ChangeEvent<HTMLInputElement>) => void;
   name2: string;
+  onChangeName2: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  id_employee: number;
   onChangeIdEmployee: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  id_employee: string;
+  comission: number;
   onChangeComission: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  comission: string;
-  onChangePhone: (event: React.ChangeEvent<HTMLInputElement>) => void;
   phone: string;
-  onChangeEmail: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePhone: (event: React.ChangeEvent<HTMLInputElement>) => void;
   email: string;
+  onChangeEmail: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  bloqued: boolean;
   onChangeBloqued: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeCreatedAt: (event: React.ChangeEvent<HTMLInputElement>) => void;
   created_at: string;
-  onChangeUpdatedAt: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // onChangeCreatedAt: (event: React.ChangeEvent<HTMLInputElement>) => void;
   updated_at: string;
+  // onChangeUpdatedAt: (event: React.ChangeEvent<HTMLInputElement>) => void;
   // {...fieldProps}
 }
 
@@ -73,7 +74,7 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
-          value={props.id_employee || ""}
+          value={String(props.id_employee) || ""}
           onChange={props.onChangeIdEmployee}
           disabled={disabled}
         />
@@ -85,8 +86,8 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
-          type="number"
-          value={props.comission || ""}
+          // type="number"
+          value={String(props.comission) || ""}
           onChange={props.onChangeComission}
           disabled={disabled}
         />
@@ -120,6 +121,7 @@ export default function InformationSalesperson(
         label={t("bloqued")}
         labelPosition="above"
         disabled={disabled}
+        checked={props.bloqued}
         onChange={props.onChangeBloqued}
         // {...switchProps}
       />
@@ -144,7 +146,7 @@ export default function InformationSalesperson(
         <Input
           disabled
           value={props.updated_at || ""}
-          onChange={props.onChangeUpdatedAt}
+          // onChange={props.onChangeUpdatedAt}
         />
       </Field>
     </div>

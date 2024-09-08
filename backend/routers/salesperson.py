@@ -83,7 +83,7 @@ async def update_salesperson_by_id(
         if not salesperson:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Salesperson not found")
 
-        salesperson.model_update(patch, exclude_unset=True)
+        salesperson.model_update(patch, exclude_defaults=False)
         await engine.save(salesperson)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

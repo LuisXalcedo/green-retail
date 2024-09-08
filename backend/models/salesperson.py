@@ -4,7 +4,7 @@ from odmantic import Model, Field, Index
 from odmantic.query import asc, desc
 from datetime import datetime
 
-from ..models.address import Address
+from ..models.address import Address, AddressSchema
 
 class Salesperson(Model):
     name: str = Field(max_length=50, index=True)
@@ -48,12 +48,13 @@ class Salesperson(Model):
     }
     
 class SalespersonSchema(BaseModel):
-    name: Optional[str] = Field(default=None)
-    name2: Optional[str] = Field(default=None)
-    # id_employee: Optional[int] = Field(unique=True)
-    # commission: Optional[float] = Field(ge=0, le=100, default=0.0)
-    # address: Address
-    # phone: Optional[Union[str,None]] = Field(max_length=20)
-    # email: Optional[Union[Email, str]] = Field(unique=True)
-    # bloqued: Optional[bool] = Field(default=False)
+    name: Optional[str] =  None
+    name2: Optional[str]  = None
+    id_employee: Optional[int] = None
+    commission: Optional[float] = None
+    phone: Optional[Union[str,None]] = None
+    email: Optional[Union[Email, str]] = None
+    bloqued: Optional[bool] = None
     # updated_at: datetime = Field(default_factory=datetime.now)
+    address: Optional['AddressSchema'] = None
+    # address: AddressSchema

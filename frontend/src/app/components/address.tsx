@@ -33,7 +33,11 @@ export default function Address(
         // validationMessage={"This is a success message"}
         {...fieldProps}
       >
-        <Input value={props.address || ""} onChange={props.onChangeAddress} />
+        <Input
+          name="address"
+          value={props.address || ""}
+          onChange={props.onChangeAddress}
+        />
       </Field>
       <Field
         label={t("address2")}
@@ -41,7 +45,11 @@ export default function Address(
         // validationMessage={"This is a success message"}
         {...fieldProps}
       >
-        <Input value={props.address2 || ""} onChange={props.onChangeAddress2} />
+        <Input
+          name="address2"
+          value={props.address2 || ""}
+          onChange={props.onChangeAddress2}
+        />
       </Field>
       <Field
         label={t("country")}
@@ -49,7 +57,11 @@ export default function Address(
         // validationMessage={"This is a success message"}
         {...fieldProps}
       >
-        <Input value={props.country || ""} onChange={props.onChangeCountry} />
+        <Input
+          name="country"
+          value={props.country || ""}
+          onChange={props.onChangeCountry}
+        />
       </Field>
       <Field
         label={t("city")}
@@ -57,7 +69,11 @@ export default function Address(
         // validationMessage={"This is a success message"}
         {...fieldProps}
       >
-        <Input value={props.city || ""} onChange={props.onChangeCity} />
+        <Input
+          name="city"
+          value={props.city || ""}
+          onChange={props.onChangeCity}
+        />
       </Field>
       <Field
         label={t("state")}
@@ -65,7 +81,11 @@ export default function Address(
         // validationMessage={"This is a success message"}
         {...fieldProps}
       >
-        <Input value={props.state || ""} onChange={props.onChangeState} />
+        <Input
+          name="state"
+          value={props.state || ""}
+          onChange={props.onChangeState}
+        />
       </Field>
       <Field
         label={t("zip_code")}
@@ -73,7 +93,11 @@ export default function Address(
         // validationMessage={"This is a success message"}
         {...fieldProps}
       >
-        <Input value={props.zip_code || ""} onChange={props.onChangeZipCode} />
+        <Input
+          name="zip_code"
+          value={props.zip_code || ""}
+          onChange={props.onChangeZipCode}
+        />
       </Field>
     </div>
   );

@@ -39,7 +39,7 @@ function Page({ params }: { params: { id: string } }) {
   const [name, setName] = useState("");
   const [name2, setName2] = useState("");
   const [id_employee, setIdEmployee] = useState<number>(0);
-  const [comission, setComission] = useState("");
+  const [comission, setComission] = useState(0);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [bloqued, setBloqued] = useState(false);
@@ -55,11 +55,64 @@ function Page({ params }: { params: { id: string } }) {
   }>({});
 
   const debounce = useDebouncedFieldUpdate((field, value) => {
-    updateSalespersonById(id_salesperson, { [field]: value });
+    const [mainField, subField] = field.split(".");
+    if (subField) {
+      updateSalespersonById(id_salesperson, {
+        [mainField]: { ...address, [subField]: value },
+      });
+    } else {
+      updateSalespersonById(id_salesperson, { [field]: value });
+    }
   }, 1000);
 
-  const handleChangeName = debounce("name");
-  const handleChangeName2 = debounce("name2");
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+    debounce("name")(e);
+  };
+
+  const handleChangeName2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName2(e.target.value);
+    debounce("name2")(e);
+  };
+
+  const handleChangeIdEmployee = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIdEmployee(Number(e.target.value));
+    debounce("id_employee")(e);
+  };
+
+  const handleChangeComission = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComission(Number(e.target.value));
+    debounce("commission")(e);
+  };
+
+  const handleChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+    debounce("phone")(e);
+  };
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    debounce("email")(e);
+  };
+
+  const onChangeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAddress((address) => ({
+      ...address,
+      [name]: value,
+    }));
+    debounce(`address.${name}`)(e);
+  };
+
+  const onChangeBloqued = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setBloqued(e.currentTarget.checked);
+      updateSalespersonById(id_salesperson, {
+        bloqued: e.currentTarget.checked,
+      });
+    },
+    [setBloqued, id_salesperson]
+  );
 
   useEffect(() => {
     setIsClient(true);
@@ -71,16 +124,16 @@ function Page({ params }: { params: { id: string } }) {
     async function fetchData() {
       try {
         const data = await getSalespersonById(id_salesperson);
-        // console.log(data);
+        console.log(data);
         // Actualiza el estado con los datos recibidos
         setId(data.id || "");
         setName(data.name || "");
         setName2(data.name2 || "");
-        setIdEmployee(data.id_employee || 0);
-        setComission(data.comission ? data.comission.toString() : "");
+        setIdEmployee(data.id_employee || "");
+        setComission(data.commission || "");
         setPhone(data.phone || "");
         setEmail(data.email || "");
-        setBloqued(data.bloqued || false);
+        setBloqued(Boolean(data.bloqued) || false);
         setCreateAt(data.created_at || "");
         setUpdateAt(data.updated_at || "");
         setAddress({
@@ -108,7 +161,7 @@ function Page({ params }: { params: { id: string } }) {
       name,
       name2,
       id_employee,
-      comission: parseFloat(comission),
+      comission,
       phone,
       email,
       bloqued,
@@ -155,29 +208,20 @@ function Page({ params }: { params: { id: string } }) {
             <AccordionPanel>
               <InformationSalesperson
                 name={name}
-                onChangeName={(e) => {
-                  setName(e.target.value);
-                  handleChangeName(e);
-                }}
+                onChangeName={handleChangeName}
                 name2={name2}
-                onChangeName2={(e) => {
-                  setName2(e.target.value);
-                  handleChangeName2(e);
-                }}
-                id_employee={id_employee.toString()} // Convert id_employee to a string
-                onChangeIdEmployee={(e) =>
-                  setIdEmployee(Number(e.target.value))
-                }
-                onChangeComission={(e) => setComission(e.target.value)}
+                onChangeName2={handleChangeName2}
+                id_employee={id_employee}
+                onChangeIdEmployee={handleChangeIdEmployee}
                 comission={comission}
-                onChangePhone={(e) => setPhone(e.target.value)}
+                onChangeComission={handleChangeComission}
                 phone={phone}
-                onChangeEmail={(e) => setEmail(e.target.value)}
+                onChangePhone={handleChangePhone}
                 email={email}
-                onChangeBloqued={(e) => setBloqued(!bloqued)}
-                onChangeCreatedAt={(e) => setCreateAt(e.target.value)}
+                onChangeEmail={handleChangeEmail}
+                bloqued={bloqued}
+                onChangeBloqued={onChangeBloqued}
                 created_at={createAt}
-                onChangeUpdatedAt={(e) => setUpdateAt(e.target.value)}
                 updated_at={updateAt}
               />
             </AccordionPanel>
@@ -188,30 +232,18 @@ function Page({ params }: { params: { id: string } }) {
             </AccordionHeader>
             <AccordionPanel>
               <Address
-                onChangeAddress={(e) =>
-                  setAddress({ ...address, address: e.target.value })
-                }
                 address={address.address}
-                onChangeAddress2={(e) =>
-                  setAddress({ ...address, address2: e.target.value })
-                }
+                onChangeAddress={onChangeAddress}
                 address2={address.address2}
-                onChangeCountry={(e) =>
-                  setAddress({ ...address, country: e.target.value })
-                }
+                onChangeAddress2={onChangeAddress}
                 country={address.country}
-                onChangeCity={(e) =>
-                  setAddress({ ...address, city: e.target.value })
-                }
+                onChangeCountry={onChangeAddress}
                 city={address.city}
-                onChangeState={(e) =>
-                  setAddress({ ...address, state: e.target.value })
-                }
+                onChangeCity={onChangeAddress}
                 state={address.state}
-                onChangeZipCode={(e) =>
-                  setAddress({ ...address, zip_code: e.target.value })
-                }
+                onChangeState={onChangeAddress}
                 zip_code={address.zip_code}
+                onChangeZipCode={onChangeAddress}
               />
             </AccordionPanel>
           </AccordionItem>

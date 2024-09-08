@@ -33,7 +33,7 @@
     "state": "Estado",
     "zip_code": "Código Postal"
   },
-  "SalespersonCreate": {
+  "Salesperson": {
     "Salesperson-Information": "Información del Vendedor",
     "Salesperson-Address": "Dirección del Vendedor"
   },
