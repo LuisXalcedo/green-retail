@@ -91,6 +91,46 @@ async def update_salesperson_by_id(
     return salesperson
 
 @router.get(
+        "/", 
+        response_model=list[Salesperson], 
+        status_code=status.HTTP_200_OK, 
+        summary="Get all salespersons", 
+        response_description="The salespersons")
+async def get_all_salespersons(
+    current_user: Salesperson = Depends(get_current_active_user)
+    ):
+    """
+    Get all salespersons
+    """
+    #Considera hacer esta configuración una vez al iniciar tu aplicación.
+    await engine.configure_database([Salesperson]) 
+    
+    try:
+        salespersons = await engine.find(Salesperson)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    return salespersons
+
+@router.get("/count", response_model=int, status_code=status.HTTP_200_OK, summary="Get the number of salespersons")
+async def get_salespersons_count(
+    current_user: Salesperson = Depends(get_current_active_user)
+    ):
+    """
+    Get the number of salespersons
+    """
+    #Considera hacer esta configuración una vez al iniciar tu aplicación.
+    await engine.configure_database([Salesperson]) 
+    
+    try:
+        count = await engine.count(Salesperson)
+        return count
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    return count
+
+@router.get(
         "/{id}", 
         response_model=Salesperson, 
         status_code=status.HTTP_200_OK, 

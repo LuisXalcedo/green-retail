@@ -2,8 +2,8 @@
 
 import Logout from "@/app/components/logout"; // Asegúrate de ajustar la ruta según tu estructura de archivos
 
-const LogoutPage: React.FC = () => {
+const Page: React.FC = () => {
   return <Logout />;
 };
 
-export default LogoutPage;
+export default Page;

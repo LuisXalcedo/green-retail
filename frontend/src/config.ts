@@ -13,6 +13,10 @@ export const pathnames = {
     en: "/",
     es: "/",
   },
+  "/dashboard/salespersons": {
+    en: "/dashboard/salespersons",
+    es: "/tablero/vendedores",
+  },
   "/salespersons": {
     en: "/salespersons",
     es: "/vendedores",

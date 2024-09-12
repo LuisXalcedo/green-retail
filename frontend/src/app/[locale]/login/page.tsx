@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function LoginPage() {
+export default function Page() {
   const styles = useStyles();
   const t = useTranslations("Login");
 

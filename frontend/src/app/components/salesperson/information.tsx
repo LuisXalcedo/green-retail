@@ -16,8 +16,8 @@ interface InformationSalespersonProps {
   onChangeName2: (event: React.ChangeEvent<HTMLInputElement>) => void;
   id_employee: number;
   onChangeIdEmployee: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  comission: number;
-  onChangeComission: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  commission: number;
+  onChangeCommission: (event: React.ChangeEvent<HTMLInputElement>) => void;
   phone: string;
   onChangePhone: (event: React.ChangeEvent<HTMLInputElement>) => void;
   email: string;
@@ -25,9 +25,7 @@ interface InformationSalespersonProps {
   bloqued: boolean;
   onChangeBloqued: (event: React.ChangeEvent<HTMLInputElement>) => void;
   created_at: string;
-  // onChangeCreatedAt: (event: React.ChangeEvent<HTMLInputElement>) => void;
   updated_at: string;
-  // onChangeUpdatedAt: (event: React.ChangeEvent<HTMLInputElement>) => void;
   // {...fieldProps}
 }
 
@@ -49,7 +47,7 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
-          id="name"
+          name="name"
           value={props.name || ""}
           onChange={props.onChangeName}
           disabled={disabled}
@@ -62,6 +60,7 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
+          name="name2"
           value={props.name2 || ""}
           onChange={props.onChangeName2}
           disabled={disabled}
@@ -74,6 +73,7 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
+          name="id_employee"
           value={String(props.id_employee) || ""}
           onChange={props.onChangeIdEmployee}
           disabled={disabled}
@@ -87,8 +87,9 @@ export default function InformationSalesperson(
       >
         <Input
           // type="number"
-          value={String(props.comission) || ""}
-          onChange={props.onChangeComission}
+          name="commission"
+          value={String(props.commission) || ""}
+          onChange={props.onChangeCommission}
           disabled={disabled}
         />
       </Field>
@@ -99,6 +100,7 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
+          name="phone"
           value={props.phone || ""}
           onChange={props.onChangePhone}
           disabled={disabled}
@@ -112,12 +114,14 @@ export default function InformationSalesperson(
       >
         <Input
           type="email"
+          name="email"
           value={props.email || ""}
           onChange={props.onChangeEmail}
           disabled={disabled}
         />
       </Field>
       <Switch
+        name="bloqued"
         label={t("bloqued")}
         labelPosition="above"
         disabled={disabled}
@@ -132,9 +136,10 @@ export default function InformationSalesperson(
         // {...fieldProps}
       >
         <Input
+          name="created_at"
           disabled
           value={props.created_at || ""}
-          onChange={props.onChangeCreatedAt}
+          // onChange={props.onChangeCreatedAt}
         />
       </Field>
       <Field
@@ -145,6 +150,7 @@ export default function InformationSalesperson(
       >
         <Input
           disabled
+          name="updated_at"
           value={props.updated_at || ""}
           // onChange={props.onChangeUpdatedAt}
         />

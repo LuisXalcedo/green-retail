@@ -5,18 +5,18 @@ import type { FieldProps } from "@fluentui/react-components";
 import { useTranslations } from "next-intl";
 
 interface AddressProps {
-  onChangeAddress: (event: React.ChangeEvent<HTMLInputElement>) => void;
   address: string;
-  onChangeAddress2: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeAddress: (event: React.ChangeEvent<HTMLInputElement>) => void;
   address2: string;
-  onChangeCountry: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeAddress2: (event: React.ChangeEvent<HTMLInputElement>) => void;
   country: string;
-  onChangeCity: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeCountry: (event: React.ChangeEvent<HTMLInputElement>) => void;
   city: string;
-  onChangeState: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeCity: (event: React.ChangeEvent<HTMLInputElement>) => void;
   state: string;
-  onChangeZipCode: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeState: (event: React.ChangeEvent<HTMLInputElement>) => void;
   zip_code: string;
+  onChangeZipCode: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Address(

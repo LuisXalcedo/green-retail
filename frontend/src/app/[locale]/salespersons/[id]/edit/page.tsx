@@ -39,7 +39,7 @@ function Page({ params }: { params: { id: string } }) {
   const [name, setName] = useState("");
   const [name2, setName2] = useState("");
   const [id_employee, setIdEmployee] = useState<number>(0);
-  const [comission, setComission] = useState(0);
+  const [commission, setCommission] = useState(0);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [bloqued, setBloqued] = useState(false);
@@ -80,8 +80,8 @@ function Page({ params }: { params: { id: string } }) {
     debounce("id_employee")(e);
   };
 
-  const handleChangeComission = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComission(Number(e.target.value));
+  const handleChangeCommission = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCommission(Number(e.target.value));
     debounce("commission")(e);
   };
 
@@ -130,7 +130,7 @@ function Page({ params }: { params: { id: string } }) {
         setName(data.name || "");
         setName2(data.name2 || "");
         setIdEmployee(data.id_employee || "");
-        setComission(data.commission || "");
+        setCommission(data.commission || "");
         setPhone(data.phone || "");
         setEmail(data.email || "");
         setBloqued(Boolean(data.bloqued) || false);
@@ -161,7 +161,7 @@ function Page({ params }: { params: { id: string } }) {
       name,
       name2,
       id_employee,
-      comission,
+      commission,
       phone,
       email,
       bloqued,
@@ -213,8 +213,8 @@ function Page({ params }: { params: { id: string } }) {
                 onChangeName2={handleChangeName2}
                 id_employee={id_employee}
                 onChangeIdEmployee={handleChangeIdEmployee}
-                comission={comission}
-                onChangeComission={handleChangeComission}
+                commission={commission}
+                onChangeCommission={handleChangeCommission}
                 phone={phone}
                 onChangePhone={handleChangePhone}
                 email={email}

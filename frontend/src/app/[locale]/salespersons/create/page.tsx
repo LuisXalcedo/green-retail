@@ -25,16 +25,16 @@ const Page = () => {
 
   const [isClient, setIsClient] = useState(false);
 
-  const [openItems, setOpenItems] = useState(["1"]);
-  const handleToggle: AccordionToggleEventHandler<string> = (event, data) => {
-    setOpenItems(data.openItems as string[]);
+  const [openItems, setOpenItems] = useState<string[]>(["1", "2"]);
+  const handleToggle: AccordionToggleEventHandler<string> = (e, data) => {
+    setOpenItems(data.openItems);
   };
 
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [name2, setName2] = useState("");
   const [id_employee, setIdEmployee] = useState<number>(0);
-  const [comission, setComission] = useState("");
+  const [commission, setCommission] = useState(0);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [bloqued, setBloqued] = useState(false);
@@ -63,7 +63,7 @@ const Page = () => {
       name,
       name2,
       id_employee,
-      comission: parseFloat(comission),
+      commission,
       phone,
       email,
       bloqued,
@@ -117,17 +117,19 @@ const Page = () => {
                 onChangeIdEmployee={(e) =>
                   setIdEmployee(Number(e.target.value))
                 }
-                id_employee={id_employee.toString()} // Convert id_employee to a string
-                onChangeComission={(e) => setComission(e.target.value)}
-                comission={comission}
+                id_employee={id_employee}
+                onChangeCommission={(e) =>
+                  setCommission(Number(e.target.value))
+                }
+                commission={commission}
                 onChangePhone={(e) => setPhone(e.target.value)}
                 phone={phone}
                 onChangeEmail={(e) => setEmail(e.target.value)}
                 email={email}
                 onChangeBloqued={(e) => setBloqued(!bloqued)}
-                onChangeCreatedAt={(e) => setCreateAt(e.target.value)}
+                // onChangeCreatedAt={(e) => setCreateAt(e.target.value)}
                 created_at={createAt}
-                onChangeUpdatedAt={(e) => setUpdateAt(e.target.value)}
+                // onChangeUpdatedAt={(e) => setUpdateAt(e.target.value)}
                 updated_at={updateAt}
               />
             </AccordionPanel>
