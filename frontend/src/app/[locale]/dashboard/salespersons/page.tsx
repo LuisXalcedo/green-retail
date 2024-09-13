@@ -31,6 +31,8 @@ function Page() {
     console.log("Selected row IDs:", Array.from(data.selectedItems));
   };
 
+  const refMap = React.useRef<Record<string, HTMLElement | null>>({});
+
   React.useEffect(() => {
     setIsClient(true);
   }, []);
@@ -61,6 +63,7 @@ function Page() {
       onSortChange={onSortChange}
       selectedRows={selectedRows}
       onSelectionChange={onSelectionChange}
+      refMap={refMap}
     />
   );
 }

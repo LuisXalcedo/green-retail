@@ -2,15 +2,20 @@ import {
   DataGrid,
   DataGridBody,
   DataGridRow,
+  DataGridCell,
+  DataGridProps,
   DataGridHeader,
   DataGridHeaderCell,
-  DataGridCell,
   TableCellLayout,
   TableColumnDefinition,
   createTableColumn,
   TableCell,
   TableRowId,
-  DataGridProps,
+  Menu,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
+  MenuItem,
 } from "@fluentui/react-components";
 import { useTranslations } from "next-intl";
 
@@ -44,12 +49,25 @@ type Item = {
   id_employee: string;
 };
 
+const columnSizingOptions = {
+  name: {
+    minWidth: 120,
+    defaultWidth: 180,
+  },
+  name2: {
+    minWidth: 120,
+    defaultWidth: 180,
+    idealWidth: 180,
+  },
+};
+
 export default function Table(props: {
   salespersons: Item[];
   sortState: Parameters<NonNullable<DataGridProps["onSortChange"]>>[1];
   onSortChange: DataGridProps["onSortChange"];
   selectedRows: Set<TableRowId>;
   onSelectionChange: DataGridProps["onSelectionChange"];
+  refMap: React.MutableRefObject<Record<string, HTMLElement | null>>;
 }) {
   const {
     salespersons,
@@ -57,6 +75,7 @@ export default function Table(props: {
     onSortChange,
     selectedRows,
     onSelectionChange,
+    refMap,
   } = props;
   const t = useTranslations("Salesperson-Information");
 
@@ -141,14 +160,20 @@ export default function Table(props: {
       })}
       columns={columns}
       sortable
-      sortState={props.sortState}
-      onSortChange={props.onSortChange}
+      sortState={sortState}
+      onSortChange={onSortChange}
       selectionMode="multiselect"
-      selectedItems={props.selectedRows}
-      onSelectionChange={props.onSelectionChange}
+      selectedItems={selectedRows}
+      onSelectionChange={onSelectionChange}
       getRowId={(item) => item.id}
       focusMode="composite"
       style={{ minWidth: "550px" }}
+      subtleSelection
+      resizableColumns
+      columnSizingOptions={columnSizingOptions}
+      resizableColumnsOptions={{
+        autoFitColumns: false,
+      }}
     >
       <DataGridHeader>
         <DataGridRow
@@ -156,9 +181,34 @@ export default function Table(props: {
             checkboxIndicator: { "aria-label": "Select all rows" },
           }}
         >
-          {({ renderHeaderCell }) => (
-            <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
-          )}
+          {({ renderHeaderCell, columnId }, dataGrid) =>
+            dataGrid.resizableColumns ? (
+              <Menu openOnContext>
+                <MenuTrigger>
+                  <DataGridHeaderCell
+                    ref={(el) => {
+                      refMap.current[columnId] = el;
+                    }}
+                  >
+                    {renderHeaderCell()}
+                  </DataGridHeaderCell>
+                </MenuTrigger>
+                <MenuPopover>
+                  <MenuList>
+                    <MenuItem
+                      onClick={dataGrid.columnSizing_unstable.enableKeyboardMode(
+                        columnId
+                      )}
+                    >
+                      Keyboard Column Resizing
+                    </MenuItem>
+                  </MenuList>
+                </MenuPopover>
+              </Menu>
+            ) : (
+              <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
+            )
+          }
         </DataGridRow>
       </DataGridHeader>
       <DataGridBody<Item>>
