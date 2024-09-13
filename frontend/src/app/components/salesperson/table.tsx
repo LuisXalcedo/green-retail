@@ -9,7 +9,10 @@ import {
   TableColumnDefinition,
   createTableColumn,
   TableCell,
+  TableRowId,
+  DataGridProps,
 } from "@fluentui/react-components";
+import { useTranslations } from "next-intl";
 
 type NameCell = {
   label: string;
@@ -32,84 +35,103 @@ type EmailCell = {
 };
 
 type Item = {
+  id: string;
   name: NameCell;
   name2: Name2Cell;
   idEmployee: IdEmployeeCell;
   phone: PhoneCell;
   email: EmailCell;
-  id_employee: IdEmployeeCell;
+  id_employee: string;
 };
 
-const columns: TableColumnDefinition<Item>[] = [
-  createTableColumn<Item>({
-    columnId: "name",
-    compare: (a, b) => {
-      return a.name.label.localeCompare(b.name.label);
-    },
-    renderHeaderCell: () => {
-      return "Name";
-    },
-    renderCell: (item) => {
-      return <TableCellLayout>{item.name.label}</TableCellLayout>;
-    },
-  }),
-  createTableColumn<Item>({
-    columnId: "name2",
-    compare: (a, b) => {
-      return a.name2.label.localeCompare(b.name2.label);
-    },
-    renderHeaderCell: () => {
-      return "Name 2";
-    },
-    renderCell: (item) => {
-      return <TableCellLayout>{item.name2.label}</TableCellLayout>;
-    },
-  }),
-  createTableColumn<Item>({
-    columnId: "idEmployee",
-    compare: (a, b) => {
-      return a.idEmployee.label.localeCompare(b.idEmployee.label);
-    },
-    renderHeaderCell: () => {
-      return "Id Employee";
-    },
-    renderCell: (item) => {
-      return <TableCellLayout>{item.idEmployee.label}</TableCellLayout>;
-    },
-  }),
-  createTableColumn<Item>({
-    columnId: "phone",
-    compare: (a, b) => {
-      return a.phone.label.localeCompare(b.phone.label);
-    },
-    renderHeaderCell: () => {
-      return "Phone";
-    },
-    renderCell: (item) => {
-      return <TableCellLayout>{item.phone.label}</TableCellLayout>;
-    },
-  }),
-  createTableColumn<Item>({
-    columnId: "email",
-    compare: (a, b) => {
-      return a.email.label.localeCompare(b.email.label);
-    },
-    renderHeaderCell: () => {
-      return "Email";
-    },
-    renderCell: (item) => {
-      return <TableCellLayout>{item.email.label}</TableCellLayout>;
-    },
-  }),
-];
+export default function Table(props: {
+  salespersons: Item[];
+  sortState: Parameters<NonNullable<DataGridProps["onSortChange"]>>[1];
+  onSortChange: DataGridProps["onSortChange"];
+  selectedRows: Set<TableRowId>;
+  onSelectionChange: DataGridProps["onSelectionChange"];
+}) {
+  const {
+    salespersons,
+    sortState,
+    onSortChange,
+    selectedRows,
+    onSelectionChange,
+  } = props;
+  const t = useTranslations("Salesperson-Information");
 
-export default function Table(props: { salespersons: Item[] }) {
-  const { salespersons } = props;
+  const columns: TableColumnDefinition<Item>[] = [
+    createTableColumn<Item>({
+      columnId: "name",
+      compare: (a, b) => {
+        return a.name.label.localeCompare(b.name.label);
+      },
+      renderHeaderCell: () => {
+        return t("first-name");
+      },
+      renderCell: (item) => {
+        return <TableCellLayout>{item.name.label}</TableCellLayout>;
+      },
+    }),
+    createTableColumn<Item>({
+      columnId: "name2",
+      compare: (a, b) => {
+        return a.name2.label.localeCompare(b.name2.label);
+      },
+      renderHeaderCell: () => {
+        return t("last-name");
+      },
+      renderCell: (item) => {
+        return <TableCellLayout>{item.name2.label}</TableCellLayout>;
+      },
+    }),
+    createTableColumn<Item>({
+      columnId: "idEmployee",
+      compare: (a, b) => {
+        return String(a.idEmployee.label).localeCompare(
+          String(b.idEmployee.label)
+        );
+      },
+      renderHeaderCell: () => {
+        return t("id-employee");
+      },
+      renderCell: (item) => {
+        return (
+          <TableCellLayout>{String(item.idEmployee.label)}</TableCellLayout>
+        );
+      },
+    }),
+    createTableColumn<Item>({
+      columnId: "phone",
+      compare: (a, b) => {
+        return a.phone.label.localeCompare(b.phone.label);
+      },
+      renderHeaderCell: () => {
+        return t("phone");
+      },
+      renderCell: (item) => {
+        return <TableCellLayout>{item.phone.label}</TableCellLayout>;
+      },
+    }),
+    createTableColumn<Item>({
+      columnId: "email",
+      compare: (a, b) => {
+        return a.email.label.localeCompare(b.email.label);
+      },
+      renderHeaderCell: () => {
+        return t("email");
+      },
+      renderCell: (item) => {
+        return <TableCellLayout>{item.email.label}</TableCellLayout>;
+      },
+    }),
+  ];
 
   return (
     <DataGrid
       items={salespersons.map((item) => {
         return {
+          id: item.id,
           name: { label: item.name },
           name2: { label: item.name2 },
           idEmployee: { label: item.id_employee },
@@ -119,8 +141,12 @@ export default function Table(props: { salespersons: Item[] }) {
       })}
       columns={columns}
       sortable
+      sortState={props.sortState}
+      onSortChange={props.onSortChange}
       selectionMode="multiselect"
-      getRowId={(item) => item.name.label}
+      selectedItems={props.selectedRows}
+      onSelectionChange={props.onSelectionChange}
+      getRowId={(item) => item.id}
       focusMode="composite"
       style={{ minWidth: "550px" }}
     >

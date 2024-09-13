@@ -94,7 +94,7 @@ export const NavLinks = (props: Partial<NavDrawerProps>) => {
         <NavDrawerHeader>{renderHamburgerWithToolTip()}</NavDrawerHeader>
         <NavDrawerBody>
           <NavSectionHeader>{t("home")}</NavSectionHeader>
-          <Link href="/salespersons/create">
+          <Link href="/dashboard/salespersons">
             <NavItem icon={<Salesperson />} value={"1"}>
               {t("salesperson")}
             </NavItem>
