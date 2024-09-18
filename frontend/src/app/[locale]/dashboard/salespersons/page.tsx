@@ -23,11 +23,10 @@ function Page() {
   };
 
   const [selectedRows, setSelectedRows] = React.useState(
-    new Set<TableRowId>([1])
+    new Set<TableRowId>([])
   );
   const onSelectionChange: DataGridProps["onSelectionChange"] = (e, data) => {
     setSelectedRows(data.selectedItems);
-    // console.log(data.selectedItems);
     console.log("Selected row IDs:", Array.from(data.selectedItems));
   };
 
@@ -63,7 +62,6 @@ function Page() {
       onSortChange={onSortChange}
       selectedRows={selectedRows}
       onSelectionChange={onSelectionChange}
-      refMap={refMap}
     />
   );
 }

@@ -10,6 +10,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@fluentui-contrib/react-data-grid-react-window": "^1.2.0",
     "@fluentui/react-components": "^9.54.13",
     "@fluentui/react-nav-preview": "^0.5.0",
     "axios": "^1.7.2",
@@ -18,6 +19,7 @@
     "next-intl": "^3.15.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-window": "^1.8.10",
     "use-debounce": "^10.0.3",
     "zod": "^3.23.8"
   },
@@ -26,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-window": "^1.8.8",
     "autoprefixer": "^10.4.20",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.5",

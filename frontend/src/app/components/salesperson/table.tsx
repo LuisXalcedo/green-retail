@@ -1,53 +1,34 @@
+import * as React from "react";
+
+import MemoizedRow from "./MemoizedRow";
 import {
-  DataGrid,
-  DataGridBody,
-  DataGridRow,
-  DataGridCell,
-  DataGridProps,
-  DataGridHeader,
-  DataGridHeaderCell,
   TableCellLayout,
   TableColumnDefinition,
   createTableColumn,
-  TableCell,
+  TableCellActions,
   TableRowId,
   Menu,
   MenuList,
   MenuPopover,
   MenuTrigger,
   MenuItem,
+  useScrollbarWidth,
+  useFluent,
+  Button,
 } from "@fluentui/react-components";
+import {
+  DataGridBody,
+  DataGrid,
+  DataGridRow,
+  DataGridHeader,
+  DataGridCell,
+  DataGridHeaderCell,
+  DataGridProps,
+  RowRenderer,
+} from "@fluentui-contrib/react-data-grid-react-window";
+import { MoreHorizontalRegular } from "@fluentui/react-icons";
 import { useTranslations } from "next-intl";
-
-type NameCell = {
-  label: string;
-};
-
-type Name2Cell = {
-  label: string;
-};
-
-type IdEmployeeCell = {
-  label: string;
-};
-
-type PhoneCell = {
-  label: string;
-};
-
-type EmailCell = {
-  label: string;
-};
-
-type Item = {
-  id: string;
-  name: NameCell;
-  name2: Name2Cell;
-  idEmployee: IdEmployeeCell;
-  phone: PhoneCell;
-  email: EmailCell;
-  id_employee: string;
-};
+import { Item, itemsSample } from "./types";
 
 const columnSizingOptions = {
   name: {
@@ -55,6 +36,20 @@ const columnSizingOptions = {
     defaultWidth: 180,
   },
   name2: {
+    minWidth: 120,
+    defaultWidth: 180,
+    idealWidth: 180,
+  },
+  idEmployee: {
+    minWidth: 120,
+    defaultWidth: 180,
+  },
+  phone: {
+    minWidth: 120,
+    defaultWidth: 180,
+    idealWidth: 180,
+  },
+  email: {
     minWidth: 120,
     defaultWidth: 180,
     idealWidth: 180,
@@ -67,7 +62,6 @@ export default function Table(props: {
   onSortChange: DataGridProps["onSortChange"];
   selectedRows: Set<TableRowId>;
   onSelectionChange: DataGridProps["onSelectionChange"];
-  refMap: React.MutableRefObject<Record<string, HTMLElement | null>>;
 }) {
   const {
     salespersons,
@@ -75,9 +69,10 @@ export default function Table(props: {
     onSortChange,
     selectedRows,
     onSelectionChange,
-    refMap,
   } = props;
+
   const t = useTranslations("Salesperson-Information");
+  const refMap = React.useRef<Record<string, HTMLElement | null>>({});
 
   const columns: TableColumnDefinition<Item>[] = [
     createTableColumn<Item>({
@@ -89,7 +84,7 @@ export default function Table(props: {
         return t("first-name");
       },
       renderCell: (item) => {
-        return <TableCellLayout>{item.name.label}</TableCellLayout>;
+        return <MemoizedRow label={item.name.label} />;
       },
     }),
     createTableColumn<Item>({
@@ -101,7 +96,7 @@ export default function Table(props: {
         return t("last-name");
       },
       renderCell: (item) => {
-        return <TableCellLayout>{item.name2.label}</TableCellLayout>;
+        return <MemoizedRow label={item.name2.label} />;
       },
     }),
     createTableColumn<Item>({
@@ -115,9 +110,7 @@ export default function Table(props: {
         return t("id-employee");
       },
       renderCell: (item) => {
-        return (
-          <TableCellLayout>{String(item.idEmployee.label)}</TableCellLayout>
-        );
+        return <MemoizedRow label={item.idEmployee.label} />;
       },
     }),
     createTableColumn<Item>({
@@ -129,7 +122,7 @@ export default function Table(props: {
         return t("phone");
       },
       renderCell: (item) => {
-        return <TableCellLayout>{item.phone.label}</TableCellLayout>;
+        return <MemoizedRow label={item.phone.label} />;
       },
     }),
     createTableColumn<Item>({
@@ -141,90 +134,100 @@ export default function Table(props: {
         return t("email");
       },
       renderCell: (item) => {
-        return <TableCellLayout>{item.email.label}</TableCellLayout>;
+        return <MemoizedRow label={item.email.label} />;
       },
     }),
   ];
 
-  return (
-    <DataGrid
-      items={salespersons.map((item) => {
-        return {
-          id: item.id,
-          name: { label: item.name },
-          name2: { label: item.name2 },
-          idEmployee: { label: item.id_employee },
-          phone: { label: item.phone },
-          email: { label: item.email },
-        };
-      })}
-      columns={columns}
-      sortable
-      sortState={sortState}
-      onSortChange={onSortChange}
-      selectionMode="multiselect"
-      selectedItems={selectedRows}
-      onSelectionChange={onSelectionChange}
-      getRowId={(item) => item.id}
-      focusMode="composite"
-      style={{ minWidth: "550px" }}
-      subtleSelection
-      resizableColumns
-      columnSizingOptions={columnSizingOptions}
-      resizableColumnsOptions={{
-        autoFitColumns: false,
+  const renderRow: RowRenderer<Item> = ({ item, rowId }, style) => (
+    <DataGridRow<Item>
+      key={rowId}
+      style={style}
+      selectionCell={{
+        checkboxIndicator: { "aria-label": "Select row" },
       }}
     >
-      <DataGridHeader>
-        <DataGridRow
-          selectionCell={{
-            checkboxIndicator: { "aria-label": "Select all rows" },
-          }}
-        >
-          {({ renderHeaderCell, columnId }, dataGrid) =>
-            dataGrid.resizableColumns ? (
-              <Menu openOnContext>
-                <MenuTrigger>
-                  <DataGridHeaderCell
-                    ref={(el) => {
-                      refMap.current[columnId] = el;
-                    }}
-                  >
-                    {renderHeaderCell()}
-                  </DataGridHeaderCell>
-                </MenuTrigger>
-                <MenuPopover>
-                  <MenuList>
-                    <MenuItem
-                      onClick={dataGrid.columnSizing_unstable.enableKeyboardMode(
-                        columnId
-                      )}
-                    >
-                      Keyboard Column Resizing
-                    </MenuItem>
-                  </MenuList>
-                </MenuPopover>
-              </Menu>
-            ) : (
-              <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
-            )
-          }
-        </DataGridRow>
-      </DataGridHeader>
-      <DataGridBody<Item>>
-        {({ item, rowId }) => (
-          <DataGridRow<Item>
-            key={rowId}
+      {({ renderCell }) => (
+        <DataGridCell focusMode="group">{renderCell(item)}</DataGridCell>
+      )}
+    </DataGridRow>
+  );
+
+  const { targetDocument } = useFluent();
+  const scrollbarWidth = useScrollbarWidth({ targetDocument });
+
+  return (
+    <div style={{ overflowX: "auto" }}>
+      <DataGrid
+        items={salespersons.map((item) => {
+          return {
+            id: item.id,
+            name: { label: item.name },
+            name2: { label: item.name2 },
+            idEmployee: { label: item.id_employee },
+            phone: { label: item.phone },
+            email: { label: item.email },
+          };
+        })}
+        // items={itemsSample}
+        columns={columns}
+        sortable
+        sortState={sortState}
+        onSortChange={onSortChange}
+        selectionMode="multiselect"
+        selectedItems={selectedRows}
+        onSelectionChange={onSelectionChange}
+        getRowId={(item) => item.id}
+        focusMode="composite"
+        // focusMode="cell"
+        style={{ minWidth: "550px" }}
+        subtleSelection
+        resizableColumns
+        columnSizingOptions={columnSizingOptions}
+        resizableColumnsOptions={{
+          autoFitColumns: true,
+        }}
+      >
+        <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
+          <DataGridRow
             selectionCell={{
-              checkboxIndicator: { "aria-label": "Select row" },
+              checkboxIndicator: { "aria-label": "Select all rows" },
             }}
           >
-            {({ renderCell }) => (
-              <DataGridCell>{renderCell(item)}</DataGridCell>
-            )}
+            {({ renderHeaderCell, columnId }, dataGrid) =>
+              dataGrid.resizableColumns ? (
+                <Menu openOnContext>
+                  <MenuTrigger>
+                    <DataGridHeaderCell
+                      ref={(el) => {
+                        refMap.current[columnId] = el;
+                      }}
+                    >
+                      {renderHeaderCell()}
+                    </DataGridHeaderCell>
+                  </MenuTrigger>
+                  <MenuPopover>
+                    <MenuList>
+                      <MenuItem
+                        onClick={dataGrid.columnSizing_unstable.enableKeyboardMode(
+                          columnId
+                        )}
+                      >
+                        Keyboard Column Resizing
+                      </MenuItem>
+                    </MenuList>
+                  </MenuPopover>
+                </Menu>
+              ) : (
+                <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
+              )
+            }
           </DataGridRow>
-        )}
-      </DataGridBody>
-    </DataGrid>
+        </DataGridHeader>
+        <DataGridBody<Item> itemSize={50} height={400}>
+          {renderRow}
+        </DataGridBody>
+      </DataGrid>
+    </div>
   );
 }
