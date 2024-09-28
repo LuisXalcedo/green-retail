@@ -12,7 +12,7 @@
   "dependencies": {
     "@fluentui-contrib/react-data-grid-react-window": "^1.2.0",
     "@fluentui/react-components": "^9.54.13",
-    "@fluentui/react-nav-preview": "^0.5.0",
+    "@fluentui/react-nav-preview": "latest",
     "axios": "^1.7.2",
     "fluentui-next-appdir-directive": "^0.1.7",
     "next": "^14.2.7",

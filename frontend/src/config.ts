@@ -17,6 +17,18 @@ export const pathnames = {
     en: "/dashboard/salespersons",
     es: "/tablero/vendedores",
   },
+  "/dashboard/salespersons/create": {
+    en: "/dashboard/salespersons/create",
+    es: "/tablero/vendedores/crear",
+  },
+  "/dashboard/salespersons/[id]/edit": {
+    en: "/dashboard/salespersons/[id]/edit",
+    es: "/tablero/vendedores/[id]/editar",
+  },
+  "/dashboard/salespersons/[id]/delete": {
+    en: "/dashboard/salespersons/[id]/delete",
+    es: "/tablero/vendedores/[id]/borrar",
+  },
   "/salespersons": {
     en: "/salespersons",
     es: "/vendedores",

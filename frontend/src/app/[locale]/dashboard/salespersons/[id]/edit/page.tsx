@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionHeader,
@@ -29,23 +29,23 @@ function Page({ params }: { params: { id: string } }) {
   const t = useTranslations("Salesperson");
   const router = useRouter();
 
-  const [isClient, setIsClient] = useState(false);
-  const [openItems, setOpenItems] = useState(["1"]);
+  const [isClient, setIsClient] = React.useState(false);
+  const [openItems, setOpenItems] = React.useState(["1"]);
   const handleToggle: AccordionToggleEventHandler<string> = (event, data) => {
     setOpenItems(data.openItems as string[]);
   };
 
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
-  const [name2, setName2] = useState("");
-  const [id_employee, setIdEmployee] = useState<number>(0);
-  const [commission, setCommission] = useState(0);
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [bloqued, setBloqued] = useState(false);
-  const [createAt, setCreateAt] = useState("");
-  const [updateAt, setUpdateAt] = useState("");
-  const [address, setAddress] = useState<{
+  const [id, setId] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [name2, setName2] = React.useState("");
+  const [id_employee, setIdEmployee] = React.useState<number>(0);
+  const [commission, setCommission] = React.useState(0);
+  const [phone, setPhone] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [bloqued, setBloqued] = React.useState(false);
+  const [createAt, setCreateAt] = React.useState("");
+  const [updateAt, setUpdateAt] = React.useState("");
+  const [address, setAddress] = React.useState<{
     address?: string | undefined;
     address2?: string | undefined;
     country?: string | undefined;
@@ -114,11 +114,11 @@ function Page({ params }: { params: { id: string } }) {
     [setBloqued, id_salesperson]
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isClient) return;
 
     async function fetchData() {
@@ -180,7 +180,7 @@ function Page({ params }: { params: { id: string } }) {
 
       // Redirect to the salesperson page
       router.push({
-        pathname: "/salespersons/[id]/edit",
+        pathname: "/dashboard/salespersons/[id]/edit",
         params: { id: data.id },
       });
     } catch (error) {

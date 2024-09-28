@@ -154,3 +154,28 @@ async def get_salesperson_by_id(
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
     return salesperson
+
+@router.delete(
+        "/{id}", 
+        status_code=status.HTTP_204_NO_CONTENT, 
+        summary="Delete a salesperson")
+async def delete_salesperson_by_id(
+    id: ObjectId, 
+    current_user: Salesperson = Depends(get_current_active_user)
+    ):
+    """
+    Delete a salesperson by its id
+    """
+    #Considera hacer esta configuración una vez al iniciar tu aplicación.
+    await engine.configure_database([Salesperson]) 
+    
+    try:
+        salesperson = await engine.find_one(Salesperson, Salesperson.id == id)
+        if not salesperson:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Salesperson not found")
+
+        await engine.delete(salesperson)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+    return salesperson

@@ -6,6 +6,7 @@ import withAuth from "@/app/components/WrappedComponent";
 
 import LocaleSwitcher from "../components/user-preferences/locale-switcher";
 import { NavLinks } from "../components/nav-links";
+import Header from "../components/header";
 
 function Page() {
   const [isClient, setIsClient] = useState(false);
@@ -19,12 +20,7 @@ function Page() {
     return null;
   }
 
-  return (
-    <div>
-      <NavLinks />
-      <LocaleSwitcher />
-    </div>
-  );
+  return <div>Point of Sale!!!</div>;
 }
 
 export default withAuth(Page);

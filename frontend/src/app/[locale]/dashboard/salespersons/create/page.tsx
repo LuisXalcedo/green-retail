@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionHeader,
@@ -23,24 +22,24 @@ const Page = () => {
   const t = useTranslations("Salesperson");
   const router = useRouter();
 
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = React.useState(false);
 
-  const [openItems, setOpenItems] = useState<string[]>(["1", "2"]);
+  const [openItems, setOpenItems] = React.useState<string[]>(["1", "2"]);
   const handleToggle: AccordionToggleEventHandler<string> = (e, data) => {
     setOpenItems(data.openItems);
   };
 
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
-  const [name2, setName2] = useState("");
-  const [id_employee, setIdEmployee] = useState<number>(0);
-  const [commission, setCommission] = useState(0);
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [bloqued, setBloqued] = useState(false);
-  const [createAt, setCreateAt] = useState("");
-  const [updateAt, setUpdateAt] = useState("");
-  const [address, setAddress] = useState<{
+  const [id, setId] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [name2, setName2] = React.useState("");
+  const [id_employee, setIdEmployee] = React.useState<number>(0);
+  const [commission, setCommission] = React.useState(0);
+  const [phone, setPhone] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [bloqued, setBloqued] = React.useState(false);
+  const [createAt, setCreateAt] = React.useState("");
+  const [updateAt, setUpdateAt] = React.useState("");
+  const [address, setAddress] = React.useState<{
     address?: string | undefined;
     address2?: string | undefined;
     country?: string | undefined;
@@ -49,7 +48,7 @@ const Page = () => {
     zip_code?: string | undefined;
   }>({});
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsClient(true);
   }, []);
 

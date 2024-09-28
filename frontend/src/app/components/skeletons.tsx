@@ -1,68 +1,72 @@
-"use client";
-
 import * as React from "react";
 import {
   Skeleton,
   SkeletonItem,
-  Field,
   makeStyles,
   tokens,
 } from "@fluentui/react-components";
 import type { SkeletonProps } from "@fluentui/react-components";
-import { styleText } from "util";
 
 const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-    maxWidth: "600px",
-    padding: "40px",
+  invertedWrapper: {
+    backgroundColor: tokens.colorNeutralBackground1,
+  },
+  firstRow: {
     alignItems: "center",
-    margin: "auto", // Centrar el componente
-    position: "relative", // Necesario para centrar con margin: auto
+    display: "grid",
+    paddingBottom: "10px",
+    position: "relative",
+    gap: "10px",
+    gridTemplateColumns: "min-content 80%",
   },
-  container: {
-    display: "flex",
-    justifyContent: "center",
+  secondThirdRow: {
     alignItems: "center",
-    height: "100vh", // Altura completa de la pantalla
-  },
-  input: {
-    width: "400px", // Ajustar el ancho del input
-    height: "42px", // Ajustar la altura del input
-    marginBottom: "20px", // Add margin between skeleton items
-  },
-  wrapper: {
-    columnGap: "15px",
-    display: "flex",
-    padding: "20px",
-  },
-  circle: {
-    width: "100px",
-    height: "100px",
+    display: "grid",
+    paddingBottom: "10px",
+    position: "relative",
+    gap: "10px",
+    gridTemplateColumns: "min-content 20% 20% 15% 15%",
   },
 });
 
-export const LoginSkeleton = (props: Partial<SkeletonProps>) => {
+export const SkeletonTable = (props: Partial<SkeletonProps>) => {
   const styles = useStyles();
-
   return (
-    <div>
+    <div className={styles.invertedWrapper}>
       <Skeleton {...props} aria-label="Loading Content">
-        <SkeletonItem shape="rectangle" className={styles.input} />
-        <SkeletonItem shape="rectangle" className={styles.input} />
-        <SkeletonItem shape="rectangle" className={styles.wrapper} />
+        <div className={styles.firstRow}>
+          <SkeletonItem shape="square" size={16} />
+          <SkeletonItem shape="rectangle" size={24} />
+        </div>
+        <div className={styles.secondThirdRow}>
+          <SkeletonItem shape="square" size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+        </div>
+        <div className={styles.secondThirdRow}>
+          <SkeletonItem shape="square" size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+        </div>
+        <div className={styles.secondThirdRow}>
+          <SkeletonItem shape="square" size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+        </div>
+        <div className={styles.secondThirdRow}>
+          <SkeletonItem shape="square" size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+          <SkeletonItem size={16} />
+        </div>
       </Skeleton>
     </div>
-  );
-};
-
-export const GreenRetailLogoSkeleton = () => {
-  const styles = useStyles();
-  return (
-    <Skeleton>
-      <SkeletonItem shape="circle" className={styles.circle} />
-    </Skeleton>
   );
 };

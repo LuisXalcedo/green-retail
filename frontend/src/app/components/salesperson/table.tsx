@@ -1,6 +1,10 @@
+"use client";
+
 import * as React from "react";
 
-import MemoizedRow from "./MemoizedRow";
+import { getSalesperson, fetchFilteredSalesperson } from "@/app/lib/api";
+
+import MemoizedRow from "@/app/components/salesperson/MemoizedRow";
 import {
   TableCellLayout,
   TableColumnDefinition,
@@ -15,6 +19,7 @@ import {
   useScrollbarWidth,
   useFluent,
   Button,
+  Skeleton,
 } from "@fluentui/react-components";
 import {
   DataGridBody,
@@ -56,23 +61,53 @@ const columnSizingOptions = {
   },
 };
 
-export default function Table(props: {
-  salespersons: Item[];
+interface TableProps {
+  query: string;
+  currentPage: number;
   sortState: Parameters<NonNullable<DataGridProps["onSortChange"]>>[1];
   onSortChange: DataGridProps["onSortChange"];
   selectedRows: Set<TableRowId>;
   onSelectionChange: DataGridProps["onSelectionChange"];
-}) {
-  const {
-    salespersons,
-    sortState,
-    onSortChange,
-    selectedRows,
-    onSelectionChange,
-  } = props;
+}
+
+export default function Table(props: Partial<TableProps>) {
+  const { sortState, onSortChange, selectedRows, onSelectionChange } = props;
 
   const t = useTranslations("Salesperson-Information");
   const refMap = React.useRef<Record<string, HTMLElement | null>>({});
+
+  const [isClient, setIsClient] = React.useState(false);
+  const [salespersons, setSalespersons] = React.useState<Item[]>([]);
+
+  const { targetDocument } = useFluent();
+  const scrollbarWidth = useScrollbarWidth({ targetDocument });
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  React.useEffect(() => {
+    if (!isClient) return;
+
+    async function fetchSalespersons() {
+      try {
+        const response = await fetchFilteredSalesperson(
+          props.query || "",
+          props.currentPage || 1
+        );
+        console.log(response);
+        setSalespersons(response);
+      } catch (error) {
+        console.error("Error fetching resource:", error);
+      }
+    }
+
+    fetchSalespersons();
+  }, [isClient, props.currentPage, props.query]);
+
+  if (!isClient) {
+    return null;
+  }
 
   const columns: TableColumnDefinition<Item>[] = [
     createTableColumn<Item>({
@@ -152,9 +187,6 @@ export default function Table(props: {
       )}
     </DataGridRow>
   );
-
-  const { targetDocument } = useFluent();
-  const scrollbarWidth = useScrollbarWidth({ targetDocument });
 
   return (
     <div style={{ overflowX: "auto" }}>

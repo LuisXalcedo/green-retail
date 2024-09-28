@@ -2,7 +2,10 @@
 
 import { DrawerProps } from "@fluentui/react-components";
 import * as React from "react";
+import Image from "next/image";
+
 import {
+  AppItem,
   Hamburger,
   NavCategory,
   NavCategoryItem,
@@ -41,21 +44,7 @@ const useStyles = makeStyles({
   root: {
     overflow: "hidden",
     display: "flex",
-    height: "600px",
-  },
-  content: {
-    flex: "1",
-    padding: "16px",
-    display: "grid",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-  },
-  field: {
-    display: "flex",
-    marginTop: "4px",
-    marginLeft: "8px",
-    flexDirection: "column",
-    gridRowGap: tokens.spacingVerticalS,
+    // height: "600px",
   },
 });
 
@@ -69,10 +58,12 @@ export const NavLinks = (props: Partial<NavDrawerProps>) => {
 
   const styles = useStyles();
 
-  const labelId = useId("type-label");
+  const typeLableId = useId("type-label");
+  const linkLabelId = useId("link-label");
 
-  const [isOpen, setIsOpen] = useState(true);
-  const [type, setType] = useState<DrawerType>("inline");
+  const [isOpen, setIsOpen] = useState(false);
+  const [enabledLinks, setEnabledLinks] = useState(true);
+  // const [type, setType] = useState<DrawerType>("overlay");
 
   const renderHamburgerWithToolTip = () => {
     return (
@@ -84,16 +75,27 @@ export const NavLinks = (props: Partial<NavDrawerProps>) => {
 
   return (
     <div className={styles.root}>
-      <NavDrawer
-        defaultSelectedValue="1"
-        defaultSelectedCategoryValue="1"
-        open={isOpen}
-        type={type}
-        size="medium"
-      >
+      <NavDrawer open={isOpen} type={"overlay"} size="medium">
         <NavDrawerHeader>{renderHamburgerWithToolTip()}</NavDrawerHeader>
-        <NavDrawerBody>
-          <NavSectionHeader>{t("home")}</NavSectionHeader>
+
+        <NavDrawerBody onClick={() => setIsOpen(!isOpen)}>
+          <Link href="/">
+            <AppItem
+              icon={
+                <Image
+                  src="/logo.png"
+                  alt="Green Retail Logo"
+                  width={32}
+                  height={32}
+                  priority={true}
+                />
+              }
+              // as="a"
+            >
+              Green Retail
+            </AppItem>
+          </Link>
+          {/* <NavSectionHeader>{t("home")}</NavSectionHeader> */}
           <Link href="/dashboard/salespersons">
             <NavItem icon={<Salesperson />} value={"1"}>
               {t("salesperson")}
@@ -109,9 +111,9 @@ export const NavLinks = (props: Partial<NavDrawerProps>) => {
           </Link>
         </NavDrawerBody>
       </NavDrawer>
-      <div className={styles.content}>
-        {!isOpen && renderHamburgerWithToolTip()}
-      </div>
+      {/* <div className={styles.content}> */}
+      {!isOpen && renderHamburgerWithToolTip()}
+      {/* </div> */}
     </div>
   );
 };

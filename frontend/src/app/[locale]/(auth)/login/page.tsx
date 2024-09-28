@@ -5,7 +5,6 @@ import { makeStyles, Text, tokens } from "@fluentui/react-components";
 
 import GreenRetailLogo from "@/app/components/GreenRetailLogo";
 import LoginForm from "@/app/components/login-form";
-import { GreenRetailLogoSkeleton } from "@/app/components/skeletons";
 import { useTranslations } from "next-intl";
 
 const useStyles = makeStyles({
@@ -45,9 +44,7 @@ export default function Page() {
     <div className={styles.root}>
       <div className={styles.container}>
         <div className={styles.verticalSpacing}>
-          {/* <Suspense fallback={<GreenRetailLogoSkeleton />}> */}
           <GreenRetailLogo />
-          {/* </Suspense> */}
         </div>
         <div>
           <Text size={500} weight="medium">
