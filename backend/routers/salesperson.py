@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from typing import Annotated
+from fastapi import APIRouter, HTTPException, status, Depends, Query
 from odmantic.exceptions import DuplicateKeyError
 from odmantic import ObjectId
 
@@ -97,6 +98,7 @@ async def update_salesperson_by_id(
         summary="Get all salespersons", 
         response_description="The salespersons")
 async def get_all_salespersons(
+    query: Annotated[str | None, Query(min_length=3, max_length=50)] = None,
     current_user: Salesperson = Depends(get_current_active_user)
     ):
     """
@@ -106,10 +108,13 @@ async def get_all_salespersons(
     await engine.configure_database([Salesperson]) 
     
     try:
-        salespersons = await engine.find(Salesperson)
+        if query:
+            salespersons = await engine.find(Salesperson, Salesperson.name == query)
+        else:
+            salespersons = await engine.find(Salesperson)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
-
+        
     return salespersons
 
 @router.get("/count", response_model=int, status_code=status.HTTP_200_OK, summary="Get the number of salespersons")
