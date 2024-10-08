@@ -1,7 +1,8 @@
 from typing import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends, Query
 from odmantic.exceptions import DuplicateKeyError
-from odmantic import ObjectId
+from odmantic import ObjectId, query as q
+import re
 
 from ..models.salesperson import Salesperson, SalespersonSchema
 from ..database.database import engine
@@ -98,7 +99,7 @@ async def update_salesperson_by_id(
         summary="Get all salespersons", 
         response_description="The salespersons")
 async def get_all_salespersons(
-    query: Annotated[str | None, Query(min_length=3, max_length=50)] = None,
+    query: Annotated[str | None, Query(max_length=20)] = None,
     current_user: Salesperson = Depends(get_current_active_user)
     ):
     """
@@ -109,7 +110,21 @@ async def get_all_salespersons(
     
     try:
         if query:
-            salespersons = await engine.find(Salesperson, Salesperson.name == query)
+            pattern = re.compile(f"^{query}", re.IGNORECASE)
+            try:
+                id_query = int(query)
+            except ValueError:
+                id_query = None
+
+            salespersons = await engine.find(
+                Salesperson, q.or_(
+                q.match(Salesperson.name, pattern),
+                q.match(Salesperson.name2, pattern),
+                q.eq(Salesperson.id_employee, id_query),
+                # q.match(Salesperson.phone, pattern),
+                # q.match(Salesperson.email, pattern),
+                )
+            )
         else:
             salespersons = await engine.find(Salesperson)
     except Exception as e:

@@ -9,6 +9,7 @@ import {
 import type { SearchBoxChangeEvent } from "@fluentui/react-components";
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "@/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 export const Search = () => {
   const searchParams = useSearchParams();
@@ -18,31 +19,30 @@ export const Search = () => {
   const [value, setValue] = React.useState<string>("");
   const [valid, setValid] = React.useState<boolean>(true);
 
-  const onChange: (e: SearchBoxChangeEvent, data: InputOnChangeData) => void = (
-    _,
-    data
-  ) => {
-    const params = new URLSearchParams(searchParams);
-    if (data.value) {
-      params.set("query", data.value);
-    } else {
-      params.delete("query");
-    }
-    const newUrl = `${pathname}?${params.toString()}` as unknown as Parameters<
-      typeof replace
-    >[0];
+  const onChange: (e: SearchBoxChangeEvent, data: InputOnChangeData) => void =
+    useDebouncedCallback((_, data) => {
+      const params = new URLSearchParams(searchParams);
+      if (data.value) {
+        params.set("query", data.value);
+      } else {
+        params.delete("query");
+      }
+      const newUrl =
+        `${pathname}?${params.toString()}` as unknown as Parameters<
+          typeof replace
+        >[0];
 
-    replace(newUrl);
+      replace(newUrl);
 
-    if (data.value.length <= 20) {
-      //   setValue(data.value);
-      setValid(true);
-    } else {
-      setValid(false);
-    }
+      if (data.value.length <= 20) {
+        //   setValue(data.value);
+        setValid(true);
+      } else {
+        setValid(false);
+      }
 
-    console.log(pathname, params.toString());
-  };
+      console.log(pathname, params.toString());
+    }, 500);
 
   return (
     <Field

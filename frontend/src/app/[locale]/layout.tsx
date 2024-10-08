@@ -26,7 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${exo_2.className} `} suppressHydrationWarning={true}>
+      <body className={`${exo_2.className}`} suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <Providers>{children}</Providers>
         </NextIntlClientProvider>

@@ -112,17 +112,26 @@ function Page({
 
   const handleEditSalesperson = () => {
     // Redirect to the salesperson page
-    redirectToSalespersonPage(selectedRows.values().next().value);
+    const idToEdit = selectedRows.values().next().value;
+    if (idToEdit !== undefined) {
+      redirectToSalespersonPage(idToEdit as string);
+    } else {
+      console.error("No salesperson selected to edit");
+    }
   };
 
   const handleDeleteSalesperson = async () => {
     const idToDelete = selectedRows.values().next().value;
-    try {
-      await deleteSalespersonById(idToDelete);
-      console.log("Salesperson deleted successfully");
-      // Optionally, refresh the table or show a success message
-    } catch (error) {
-      console.error("Error deleting salesperson:", error);
+    if (idToDelete !== undefined) {
+      try {
+        await deleteSalespersonById(idToDelete as string);
+        console.log("Salesperson deleted successfully");
+        // Optionally, refresh the table or show a success message
+      } catch (error) {
+        console.error("Error deleting salesperson:", error);
+      }
+    } else {
+      console.error("No salesperson selected to delete");
     }
   };
 

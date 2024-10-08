@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import * as React from "react";
 
@@ -95,7 +95,7 @@ export default function Table(props: Partial<TableProps>) {
           props.query || "",
           props.currentPage || 1
         );
-        console.log(response);
+        // console.log(response);
         setSalespersons(response);
       } catch (error) {
         console.error("Error fetching resource:", error);

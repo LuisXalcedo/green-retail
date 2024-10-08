@@ -2,7 +2,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 const useDebouncedFieldUpdate = (
   updateFunction: (field: string, value: any) => void,
-  delay: number = 300
+  delay: number = 1000
 ) => {
   const debouncedUpdate = useDebouncedCallback((field: string, value: any) => {
     updateFunction(field, value);
