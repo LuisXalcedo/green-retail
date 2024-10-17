@@ -26,7 +26,8 @@
     "global.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/app/[locale]/dashboard/salespersons/[id]/edit/not-found.tsx"
   ],
   "exclude": ["node_modules"]
 }

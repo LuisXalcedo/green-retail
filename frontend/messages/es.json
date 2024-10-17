@@ -1,7 +1,8 @@
 {
   "NotFoundPage": {
     "title": "Página no encontrada",
-    "description": "La página que buscas no existe."
+    "description": "La página que buscas no existe.",
+    "backHome": "Volver al Inicio"
   },
   "Login": {
     "title": "Iniciar Sesión",

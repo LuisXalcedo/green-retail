@@ -11,8 +11,11 @@ from ..models.token import Token
 
 router = APIRouter()
 
+
 @router.post("/token")
-async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token: 
+async def login_for_access_token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+) -> Token:
     user = authenticate_user(fake_users_db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -26,10 +29,13 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
     )
     return Token(access_token=access_token, token_type="bearer")
 
+
 @router.post("/refresh", response_model=Token)
 async def refresh_token(token: str = Depends(oauth2_scheme)):
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        payload = jwt.decode(
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+        )
         username: str = payload.get("sub")
         if username is None:
             raise HTTPException(status_code=401, detail="Invalid token")

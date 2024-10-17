@@ -123,13 +123,13 @@ function Page({
   const handleDeleteSalesperson = async () => {
     const idToDelete = selectedRows.values().next().value;
     if (idToDelete !== undefined) {
-      try {
-        await deleteSalespersonById(idToDelete as string);
-        console.log("Salesperson deleted successfully");
-        // Optionally, refresh the table or show a success message
-      } catch (error) {
-        console.error("Error deleting salesperson:", error);
-      }
+      // try {
+      await deleteSalespersonById(idToDelete as string);
+      console.log("Salesperson deleted successfully");
+      // Optionally, refresh the table or show a success message
+      // } catch (error) {
+      //   console.error("Error deleting salesperson:", error);
+      // }
     } else {
       console.error("No salesperson selected to delete");
     }

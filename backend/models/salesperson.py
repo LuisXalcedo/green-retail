@@ -1,10 +1,11 @@
 from pydantic import EmailStr as Email, BaseModel
 from typing import Union, Optional
 from odmantic import Model, Field, Index
-from odmantic.query import asc, desc
+from odmantic.query import asc
 from datetime import datetime
 
 from ..models.address import Address, AddressSchema
+
 
 class Salesperson(Model):
     name: str = Field(max_length=50, index=True)
@@ -12,7 +13,7 @@ class Salesperson(Model):
     id_employee: int = Field(unique=True)
     commission: float = Field(ge=0, le=100, default=0.0)
     address: Address
-    phone: Union[str,None] = Field(max_length=20)
+    phone: Union[str, None] = Field(max_length=20)
     email: Union[Email, str] = Field(unique=True)
     bloqued: bool = Field(default=False)
     created_at: datetime = Field(default_factory=datetime.now)
@@ -22,39 +23,43 @@ class Salesperson(Model):
         "collection": "salespersons",
         "parse_doc_with_default_factories": True,
         "indexes": lambda: [
-            Index(Salesperson.name, asc(Salesperson.id_employee), name="name_id_employee_idx")
-            ],
+            Index(
+                Salesperson.name,
+                asc(Salesperson.id_employee),
+                name="name_id_employee_idx",
+            )
+        ],
         "json_schema_extra": {
-            "example": 
-                {
-                    "name": "John Doe",
-                    "name2": "John",
-                    "id_employee": 1,
-                    "commission": 5.0,
-                    "address": {
-                        "id_address": "billing",
-                        "address": "123 Main St",
-                        "address2": "Apt 101",
-                        "country": "USA",
-                        "city": "Springfield",
-                        "state": "IL",
-                        "zip_code": "62701"
-                    },
-                    "phone": "217-555-1234",
-                    "email": "example@mail.com",
-                    "bloqued": False,
-                }
-        }
+            "example": {
+                "name": "John Doe",
+                "name2": "John",
+                "id_employee": 1,
+                "commission": 5.0,
+                "address": {
+                    "id_address": "billing",
+                    "address": "123 Main St",
+                    "address2": "Apt 101",
+                    "country": "USA",
+                    "city": "Springfield",
+                    "state": "IL",
+                    "zip_code": "62701",
+                },
+                "phone": "217-555-1234",
+                "email": "example@mail.com",
+                "bloqued": False,
+            }
+        },
     }
-    
+
+
 class SalespersonSchema(BaseModel):
-    name: Optional[str] =  None
-    name2: Optional[str]  = None
+    name: Optional[str] = None
+    name2: Optional[str] = None
     id_employee: Optional[int] = None
     commission: Optional[float] = None
-    phone: Optional[Union[str,None]] = None
+    phone: Optional[Union[str, None]] = None
     email: Optional[Union[Email, str]] = None
     bloqued: Optional[bool] = None
     # updated_at: datetime = Field(default_factory=datetime.now)
-    address: Optional['AddressSchema'] = None
+    address: Optional["AddressSchema"] = None
     # address: AddressSchema

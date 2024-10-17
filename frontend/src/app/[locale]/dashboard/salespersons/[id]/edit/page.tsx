@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-// import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionHeader,
@@ -23,6 +22,7 @@ import InformationSalesperson from "@/app/components/salesperson/information";
 import { Salesperson } from "@/app/lib/definitions";
 import { useRouter } from "@/navigation";
 import useDebouncedFieldUpdate from "@/hooks/useDebouncedFieldUpdate";
+import { notFound } from "next/navigation";
 
 function Page({ params }: { params: { id: string } }) {
   const id_salesperson = params.id;
@@ -122,31 +122,38 @@ function Page({ params }: { params: { id: string } }) {
     if (!isClient) return;
 
     async function fetchData() {
-      try {
-        const data = await getSalespersonById(id_salesperson);
-        console.log(data);
-        // Actualiza el estado con los datos recibidos
-        setId(data.id || "");
-        setName(data.name || "");
-        setName2(data.name2 || "");
-        setIdEmployee(data.id_employee || "");
-        setCommission(data.commission || "");
-        setPhone(data.phone || "");
-        setEmail(data.email || "");
-        setBloqued(Boolean(data.bloqued) || false);
-        setCreateAt(data.created_at || "");
-        setUpdateAt(data.updated_at || "");
-        setAddress({
-          address: data.address.address || "",
-          address2: data.address.address2 || "",
-          country: data.address.country || "",
-          city: data.address.city || "",
-          state: data.address.state || "",
-          zip_code: data.address.zip_code || "",
-        });
-      } catch (error) {
-        console.error(error);
+      // try {
+      const data = await getSalespersonById(id_salesperson);
+
+      if (!data) {
+        console.log("No se encontró el vendedor");
+        notFound();
       }
+
+      console.log(data);
+
+      // Actualiza el estado con los datos recibidos
+      setId(data.id || "");
+      setName(data.name || "");
+      setName2(data.name2 || "");
+      setIdEmployee(data.id_employee || "");
+      setCommission(data.commission || "");
+      setPhone(data.phone || "");
+      setEmail(data.email || "");
+      setBloqued(Boolean(data.bloqued) || false);
+      setCreateAt(data.created_at || "");
+      setUpdateAt(data.updated_at || "");
+      setAddress({
+        address: data.address.address || "",
+        address2: data.address.address2 || "",
+        country: data.address.country || "",
+        city: data.address.city || "",
+        state: data.address.state || "",
+        zip_code: data.address.zip_code || "",
+      });
+      // } catch (error) {
+      //   console.error(error);
+      // }
     }
     fetchData();
   }, [isClient, id_salesperson]);
@@ -174,18 +181,18 @@ function Page({ params }: { params: { id: string } }) {
         zip_code: address.zip_code,
       },
     };
-    try {
-      const data = await createSalesperson(salesperson);
-      console.log("Response from createSalesperson:", data);
+    // try {
+    const data = await createSalesperson(salesperson);
+    console.log("Response from createSalesperson:", data);
 
-      // Redirect to the salesperson page
-      router.push({
-        pathname: "/dashboard/salespersons/[id]/edit",
-        params: { id: data.id },
-      });
-    } catch (error) {
-      console.error("Error al crear el vendedor", error);
-    }
+    // Redirect to the salesperson page
+    router.push({
+      pathname: "/dashboard/salespersons/[id]/edit",
+      params: { id: data.id },
+    });
+    // } catch (error) {
+    //   console.error("Error al crear el vendedor", error);
+    // }
   };
 
   return (

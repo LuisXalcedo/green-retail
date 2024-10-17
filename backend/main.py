@@ -16,7 +16,7 @@ app.add_middleware(
 
 app.include_router(api_router)
 
+
 @app.get("/")
 async def read_root():
     return {"message": "Hello Luis"}
-

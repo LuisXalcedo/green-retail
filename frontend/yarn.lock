@@ -1142,10 +1142,10 @@
     wrap-ansi "^8.1.0"
     wrap-ansi-cjs "npm:wrap-ansi@^7.0.0"
 
-"@next/env@14.2.7":
-  version "14.2.7"
-  resolved "https://registry.npmjs.org/@next/env/-/env-14.2.7.tgz"
-  integrity sha512-OTx9y6I3xE/eih+qtthppwLytmpJVPM5PPoJxChFsbjIEFXIayG0h/xLzefHGJviAa3Q5+Fd+9uYojKkHDKxoQ==
+"@next/env@14.2.15":
+  version "14.2.15"
+  resolved "https://registry.npmjs.org/@next/env/-/env-14.2.15.tgz"
+  integrity sha512-S1qaj25Wru2dUpcIZMjxeMVSwkt8BK4dmWHHiBuRstcIyOsMapqT4A4jSB6onvqeygkSSmOkyny9VVx8JIGamQ==
 
 "@next/eslint-plugin-next@14.2.5":
   version "14.2.5"
@@ -1154,10 +1154,10 @@
   dependencies:
     glob "10.3.10"
 
-"@next/swc-darwin-x64@14.2.7":
-  version "14.2.7"
-  resolved "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-14.2.7.tgz"
-  integrity sha512-ys2cUgZYRc+CbyDeLAaAdZgS7N1Kpyy+wo0b/gAj+SeOeaj0Lw/q+G1hp+DuDiDAVyxLBCJXEY/AkhDmtihUTA==
+"@next/swc-darwin-x64@14.2.15":
+  version "14.2.15"
+  resolved "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-14.2.15.tgz"
+  integrity sha512-5TGyjFcf8ampZP3e+FyCax5zFVHi+Oe7sZyaKOngsqyaNEpOgkKB3sqmymkZfowy3ufGA/tUgDPPxpQx931lHg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -2868,12 +2868,12 @@ next-intl@^3.15.3:
     negotiator "^0.6.3"
     use-intl "^3.15.3"
 
-"next@^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0", next@^14.2.7:
-  version "14.2.7"
-  resolved "https://registry.npmjs.org/next/-/next-14.2.7.tgz"
-  integrity sha512-4Qy2aK0LwH4eQiSvQWyKuC7JXE13bIopEQesWE0c/P3uuNRnZCQanI0vsrMLmUQJLAto+A+/8+sve2hd+BQuOQ==
+"next@^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0", next@^14.2.15:
+  version "14.2.15"
+  resolved "https://registry.npmjs.org/next/-/next-14.2.15.tgz"
+  integrity sha512-h9ctmOokpoDphRvMGnwOJAedT6zKhwqyZML9mDtspgf4Rh3Pn7UTYKqePNoDvhsWBAO5GoPNYshnAUGIazVGmw==
   dependencies:
-    "@next/env" "14.2.7"
+    "@next/env" "14.2.15"
     "@swc/helpers" "0.5.5"
     busboy "1.6.0"
     caniuse-lite "^1.0.30001579"
@@ -2881,15 +2881,15 @@ next-intl@^3.15.3:
     postcss "8.4.31"
     styled-jsx "5.1.1"
   optionalDependencies:
-    "@next/swc-darwin-arm64" "14.2.7"
-    "@next/swc-darwin-x64" "14.2.7"
-    "@next/swc-linux-arm64-gnu" "14.2.7"
-    "@next/swc-linux-arm64-musl" "14.2.7"
-    "@next/swc-linux-x64-gnu" "14.2.7"
-    "@next/swc-linux-x64-musl" "14.2.7"
-    "@next/swc-win32-arm64-msvc" "14.2.7"
-    "@next/swc-win32-ia32-msvc" "14.2.7"
-    "@next/swc-win32-x64-msvc" "14.2.7"
+    "@next/swc-darwin-arm64" "14.2.15"
+    "@next/swc-darwin-x64" "14.2.15"
+    "@next/swc-linux-arm64-gnu" "14.2.15"
+    "@next/swc-linux-arm64-musl" "14.2.15"
+    "@next/swc-linux-x64-gnu" "14.2.15"
+    "@next/swc-linux-x64-musl" "14.2.15"
+    "@next/swc-win32-arm64-msvc" "14.2.15"
+    "@next/swc-win32-ia32-msvc" "14.2.15"
+    "@next/swc-win32-x64-msvc" "14.2.15"
 
 node-releases@^2.0.18:
   version "2.0.18"
