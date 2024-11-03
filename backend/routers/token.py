@@ -3,11 +3,12 @@ from typing import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError as JWTError
+import jwt
 
-from ..models.user import *
-from ..dependencies import *
+from ..dependencies import fake_users_db, authenticate_user, oauth2_scheme
 from ..config.config import settings
-from ..models.token import Token
+from ..models.token import Token, TokenData
+from ..utils.security import create_access_token
 
 router = APIRouter()
 
