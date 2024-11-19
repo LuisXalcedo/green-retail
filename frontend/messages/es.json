@@ -1,4 +1,8 @@
 {
+  "Home": {
+    "title": "Inicio",
+    "description": "Bienvenido a Green Retail"
+  },
   "NotFoundPage": {
     "title": "Página no encontrada",
     "description": "La página que buscas no existe.",

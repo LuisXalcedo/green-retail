@@ -36,7 +36,7 @@ import {
   Power20Filled,
   bundleIcon,
 } from "@fluentui/react-icons";
-import { Link } from "@/navigation";
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 

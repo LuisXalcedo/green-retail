@@ -12,7 +12,7 @@ import { ToolbarForm } from "@/app/components/toolbar-form";
 import { Search } from "@/app/components/search";
 import { createSalesperson, deleteSalespersonById } from "@/app/lib/api";
 import { Salesperson } from "@/app/lib/definitions";
-import { useRouter } from "@/navigation";
+import { useRouter } from "@/i18n/routing";
 
 function Page({
   searchParams,

@@ -8,10 +8,9 @@ import {
   tokens,
   useId,
 } from "@fluentui/react-components";
-import clsx from "clsx";
 import { useParams } from "next/navigation";
 import { ChangeEvent, ReactNode, useTransition } from "react";
-import { useRouter, usePathname } from "@/navigation";
+import { useRouter, usePathname } from "@/i18n/routing";
 
 const useStyles = makeStyles({
   base: {

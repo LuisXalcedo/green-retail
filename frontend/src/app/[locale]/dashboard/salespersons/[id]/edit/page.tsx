@@ -20,7 +20,7 @@ import { ToolbarForm } from "@/app/components/toolbar-form";
 import Address from "@/app/components/address";
 import InformationSalesperson from "@/app/components/salesperson/information";
 import { Salesperson } from "@/app/lib/definitions";
-import { useRouter } from "@/navigation";
+import { useRouter } from "@/i18n/routing";
 import useDebouncedFieldUpdate from "@/hooks/useDebouncedFieldUpdate";
 import { notFound } from "next/navigation";
 

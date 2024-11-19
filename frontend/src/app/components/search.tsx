@@ -8,7 +8,7 @@ import {
 } from "@fluentui/react-components";
 import type { SearchBoxChangeEvent } from "@fluentui/react-components";
 import { useSearchParams } from "next/navigation";
-import { useRouter, usePathname } from "@/navigation";
+import { useRouter, usePathname } from "@/i18n/routing";
 import { useDebouncedCallback } from "use-debounce";
 
 export const Search = () => {

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { exo_2 } from "@/app/components/fonts";
 
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 
 // 👇 import the providers
 import { Providers } from "@/app/providers";
@@ -13,20 +14,34 @@ export const metadata: Metadata = {
   keywords: ["Retail", "Point of Sale"],
 };
 
-export default async function RootLayout({
-  children,
-  params: { locale },
-}: {
-  children: React.ReactNode;
-  params: { locale: string };
-}) {
+export default async function RootLayout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ locale: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
+  const {
+    children
+  } = props;
+
+  // Ensure that the incoming `locale` is valid
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
     <html lang={locale}>
-      <body className={`${exo_2.className}`} suppressHydrationWarning={true}>
+      <body>
         <NextIntlClientProvider messages={messages}>
           <Providers>{children}</Providers>
         </NextIntlClientProvider>
