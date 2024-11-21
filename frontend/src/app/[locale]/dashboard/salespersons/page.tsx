@@ -2,14 +2,28 @@
 
 import * as React from "react";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
 
 import { DataGridProps, TableRowId } from "@fluentui/react-components";
 
 import withAuth from "@/app/components/WrappedComponent";
-import Table from "@/app/components/salesperson/table";
+const DynamicTable = dynamic(
+  () => import("@/app/components/salesperson/table"),
+  { ssr: false }
+);
 import { SkeletonTable } from "@/app/components/skeletons";
-import { ToolbarForm } from "@/app/components/toolbar-form";
-import { Search } from "@/app/components/search";
+const DynamicToolbar = dynamic(
+  () => import("@/app/components/toolbar-form").then((mod) => mod.ToolbarForm),
+  {
+    ssr: false,
+  }
+);
+const DynamicSearch = dynamic(
+  () => import("@/app/components/search").then((mod) => mod.Search),
+  {
+    ssr: false,
+  }
+);
 import { createSalesperson, deleteSalespersonById } from "@/app/lib/api";
 import { Salesperson } from "@/app/lib/definitions";
 import { useRouter } from "@/i18n/routing";
@@ -22,12 +36,8 @@ function Page({
     page?: string;
   };
 }) {
-  const query = searchParams?.query || "";
-  const currentPage = Number(searchParams?.page || 1);
-
   const router = useRouter();
   const [isClient, setIsClient] = React.useState(false);
-
   const [id, setId] = React.useState("");
   const [name, setName] = React.useState("");
   const [name2, setName2] = React.useState("");
@@ -73,6 +83,9 @@ function Page({
     // Render a loading state or nothing on the server
     return null;
   }
+
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page || 1);
 
   const redirectToSalespersonPage = (id: string) => {
     router.push({
@@ -136,20 +149,21 @@ function Page({
   };
 
   return (
-    <div>
+    <div className="dashboard-content">
       <div>
-        <ToolbarForm
+        <DynamicToolbar
+          key="toolbar-form"
           onNewClick={handleCreateSalesperson}
           onEditClick={handleEditSalesperson}
           onDeleteClick={handleDeleteSalesperson}
         />
       </div>
       <div>
-        <Search />
+        <DynamicSearch key="search" />
       </div>
       <div>
         <Suspense key={query + currentPage} fallback={<SkeletonTable />}>
-          <Table
+          <DynamicTable
             query={query}
             currentPage={currentPage}
             sortState={sortState}

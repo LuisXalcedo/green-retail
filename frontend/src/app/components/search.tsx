@@ -44,18 +44,17 @@ export const Search = () => {
       console.log(pathname, params.toString());
     }, 500);
 
+  React.useEffect(() => {
+    setValue(searchParams.get("query")?.toString() || "");
+  }, [searchParams]);
+
   return (
     <Field
       label="Search"
       validationState={valid ? "none" : "warning"}
       validationMessage={valid ? "" : "Search value is too long"}
     >
-      <SearchBox
-        // value={value}
-        onChange={onChange}
-        placeholder="Buscar"
-        defaultValue={searchParams.get("query")?.toString()}
-      />
+      <SearchBox value={value} onChange={onChange} placeholder="Buscar" />
     </Field>
   );
 };

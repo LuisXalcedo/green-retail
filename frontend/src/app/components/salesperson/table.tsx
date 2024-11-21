@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { getSalesperson, fetchFilteredSalesperson } from "@/app/lib/api";
+import { fetchFilteredSalesperson } from "@/app/lib/api";
 
 import MemoizedRow from "@/app/components/salesperson/MemoizedRow";
 import {
