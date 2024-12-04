@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import ErrorBoundary from "@/app/components/ErrorBoundary";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -32,12 +31,10 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body>
-        <ErrorBoundary>
-          <NextIntlClientProvider messages={messages}>
-            <Providers>{children}</Providers>
-          </NextIntlClientProvider>
-        </ErrorBoundary>
+      <body suppressHydrationWarning={true}>
+        <NextIntlClientProvider messages={messages}>
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

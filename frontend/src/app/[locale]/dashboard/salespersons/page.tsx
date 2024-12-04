@@ -7,24 +7,11 @@ import dynamic from "next/dynamic";
 import { DataGridProps, TableRowId } from "@fluentui/react-components";
 
 import withAuth from "@/app/components/WrappedComponent";
-const DynamicTable = dynamic(
-  () => import("@/app/components/salesperson/table"),
-  { ssr: false }
-);
+import Table from "@/app/components/salesperson/table";
 import { SkeletonTable } from "@/app/components/skeletons";
-const DynamicToolbar = dynamic(
-  () => import("@/app/components/toolbar-form").then((mod) => mod.ToolbarForm),
-  {
-    ssr: false,
-  }
-);
-const DynamicSearch = dynamic(
-  () => import("@/app/components/search").then((mod) => mod.Search),
-  {
-    ssr: false,
-  }
-);
-import { createSalesperson, deleteSalespersonById } from "@/app/lib/api";
+import { ToolbarForm } from "@/app/components/toolbar-form";
+import { Search } from "@/app/components/search";
+import { createSalesperson, deleteSalespersonById } from "@/app/lib/api-calls";
 import { Salesperson } from "@/app/lib/definitions";
 import { useRouter } from "@/i18n/routing";
 
@@ -149,21 +136,21 @@ function Page({
   };
 
   return (
-    <div className="dashboard-content">
+    <div>
       <div>
-        <DynamicToolbar
-          key="toolbar-form"
+        <ToolbarForm
+          // key="toolbar-form"
           onNewClick={handleCreateSalesperson}
           onEditClick={handleEditSalesperson}
           onDeleteClick={handleDeleteSalesperson}
         />
       </div>
       <div>
-        <DynamicSearch key="search" />
+        <Search key="search" />
       </div>
       <div>
-        <Suspense key={query + currentPage} fallback={<SkeletonTable />}>
-          <DynamicTable
+        <Suspense fallback={<SkeletonTable />}>
+          <Table
             query={query}
             currentPage={currentPage}
             sortState={sortState}

@@ -14,9 +14,9 @@ import Address from "@/app/components/address";
 import InformationSalesperson from "@/app/components/salesperson/information";
 import { ToolbarForm } from "@/app/components/toolbar-form";
 import { Salesperson } from "@/app/lib/definitions";
-import { createSalesperson } from "@/app/lib/api";
+import { createSalesperson } from "@/app/lib/api-calls";
 import withAuth from "@/app/components/WrappedComponent";
-import { useRouter } from "@/navigation";
+import { useRouter } from "@/i18n/routing";
 
 const Page = () => {
   const t = useTranslations("Salesperson");
@@ -82,8 +82,8 @@ const Page = () => {
       // Redirect to the salesperson page
 
       router.push({
-        pathname: "/salespersons/[id]/edit",
-        params: { id: data.id },
+        pathname: "/dashboard/salespersons/[id]/edit",
+        params: { id },
       });
     } catch (error) {
       console.error("Error al crear el vendedor", error);

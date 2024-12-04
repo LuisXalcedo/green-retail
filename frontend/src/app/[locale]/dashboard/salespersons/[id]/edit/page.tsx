@@ -14,7 +14,7 @@ import {
   getSalespersonById,
   createSalesperson,
   updateSalespersonById,
-} from "@/app/lib/api";
+} from "@/app/lib/api-calls";
 import withAuth from "@/app/components/WrappedComponent";
 import { ToolbarForm } from "@/app/components/toolbar-form";
 import Address from "@/app/components/address";
@@ -46,12 +46,12 @@ function Page({ params }: { params: { id: string } }) {
   const [createAt, setCreateAt] = React.useState("");
   const [updateAt, setUpdateAt] = React.useState("");
   const [address, setAddress] = React.useState<{
-    address?: string | undefined;
-    address2?: string | undefined;
-    country?: string | undefined;
-    city?: string | undefined;
-    state?: string | undefined;
-    zip_code?: string | undefined;
+    address?: string | "";
+    address2?: string | "";
+    country?: string | "";
+    city?: string | "";
+    state?: string | "";
+    zip_code?: string | "";
   }>({});
 
   const debounce = useDebouncedFieldUpdate((field, value) => {
@@ -136,25 +136,36 @@ function Page({ params }: { params: { id: string } }) {
       setId(data.id || "");
       setName(data.name || "");
       setName2(data.name2 || "");
-      setIdEmployee(data.id_employee || "");
-      setCommission(data.commission || "");
+      setIdEmployee(data.id_employee || 0);
+      setCommission(data.commission || 0);
       setPhone(data.phone || "");
       setEmail(data.email || "");
       setBloqued(Boolean(data.bloqued) || false);
       setCreateAt(data.created_at || "");
       setUpdateAt(data.updated_at || "");
-      setAddress({
-        address: data.address.address || "",
-        address2: data.address.address2 || "",
-        country: data.address.country || "",
-        city: data.address.city || "",
-        state: data.address.state || "",
-        zip_code: data.address.zip_code || "",
-      });
-      // } catch (error) {
-      //   console.error(error);
-      // }
+      // Check if data.address is defined before accessing its properties
+      if (data.address) {
+        setAddress({
+          address: data.address.address || "",
+          address2: data.address.address2 || "",
+          country: data.address.country || "",
+          city: data.address.city || "",
+          state: data.address.state || "",
+        });
+      } else {
+        setAddress({
+          address: "",
+          address2: "",
+          country: "",
+          city: "",
+          state: "",
+        });
+        // } catch (error) {
+        //   console.error(error);
+        // }
+      }
     }
+
     fetchData();
   }, [isClient, id_salesperson]);
 
@@ -162,6 +173,13 @@ function Page({ params }: { params: { id: string } }) {
     // Render a loading state or nothing on the server
     return null;
   }
+
+  const redirectToSalespersonPage = (id: string) => {
+    router.push({
+      pathname: "/dashboard/salespersons/[id]/edit",
+      params: { id },
+    });
+  };
 
   const handleCreateSalesperson = async () => {
     const salesperson: Salesperson = {
@@ -181,18 +199,19 @@ function Page({ params }: { params: { id: string } }) {
         zip_code: address.zip_code,
       },
     };
-    // try {
-    const data = await createSalesperson(salesperson);
-    console.log("Response from createSalesperson:", data);
+    try {
+      const data = await createSalesperson(salesperson);
+      console.log("Response from createSalesperson:", data);
 
-    // Redirect to the salesperson page
-    router.push({
-      pathname: "/dashboard/salespersons/[id]/edit",
-      params: { id: data.id },
-    });
-    // } catch (error) {
-    //   console.error("Error al crear el vendedor", error);
-    // }
+      // Redirect to the salesperson page
+      if (data.id) {
+        redirectToSalespersonPage(data.id);
+      } else {
+        console.error("Salesperson ID is undefined");
+      }
+    } catch (error) {
+      console.error("Error al crear el vendedor", error);
+    }
   };
 
   return (

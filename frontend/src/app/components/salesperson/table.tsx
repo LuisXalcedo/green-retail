@@ -1,9 +1,7 @@
-// "use client";
+"use client";
 
 import * as React from "react";
-
-import { fetchFilteredSalesperson } from "@/app/lib/api";
-
+import { fetchFilteredSalesperson } from "@/app/lib/api-calls";
 import MemoizedRow from "@/app/components/salesperson/MemoizedRow";
 import {
   TableCellLayout,
@@ -70,9 +68,14 @@ interface TableProps {
   onSelectionChange: DataGridProps["onSelectionChange"];
 }
 
-export default function Table(props: Partial<TableProps>) {
-  const { sortState, onSortChange, selectedRows, onSelectionChange } = props;
-
+export default function Table({
+  query = "",
+  currentPage = 1,
+  sortState,
+  onSortChange,
+  selectedRows,
+  onSelectionChange,
+}: Partial<TableProps>) {
   const t = useTranslations("Salesperson-Information");
   const refMap = React.useRef<Record<string, HTMLElement | null>>({});
 
@@ -84,18 +87,12 @@ export default function Table(props: Partial<TableProps>) {
 
   React.useEffect(() => {
     setIsClient(true);
-  }, []);
 
-  React.useEffect(() => {
     if (!isClient) return;
 
     async function fetchSalespersons() {
       try {
-        const response = await fetchFilteredSalesperson(
-          props.query || "",
-          props.currentPage || 1
-        );
-        // console.log(response);
+        const response = await fetchFilteredSalesperson(query, currentPage);
         setSalespersons(response);
       } catch (error) {
         console.error("Error fetching resource:", error);
@@ -103,7 +100,7 @@ export default function Table(props: Partial<TableProps>) {
     }
 
     fetchSalespersons();
-  }, [isClient, props.currentPage, props.query]);
+  }, [isClient, currentPage, query]);
 
   if (!isClient) {
     return null;
