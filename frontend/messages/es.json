@@ -1,0 +1,56 @@
+{
+  "Home": {
+    "title": "Inicio",
+    "description": "Bienvenido a Green Retail"
+  },
+  "NotFoundPage": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe.",
+    "backHome": "Volver al Inicio"
+  },
+  "Login": {
+    "title": "Iniciar Sesión",
+    "email": "Email",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "submit": "Iniciar Sesión",
+    "greeting": "Bienvenido a Green Retail"
+  },
+  "Toolbar": {
+    "new": "Nuevo",
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "NavLinks": {
+    "home": "Home",
+    "salesperson": "Vendedor",
+    "logout": "Cerrar Sesión"
+  },
+  "LocaleSwitcher": {
+    "label": "Cambiar Idioma",
+    "locale": "{locale, select, en {🇺🇸 Inglés} es {🇪🇸 Español} other {Unknown}}"
+  },
+  "Address": {
+    "address": "Dirección",
+    "address2": "Dirección 2",
+    "country": "País",
+    "city": "Ciudad",
+    "state": "Estado",
+    "zip_code": "Código Postal"
+  },
+  "Salesperson": {
+    "Salesperson-Information": "Información del Vendedor",
+    "Salesperson-Address": "Dirección del Vendedor"
+  },
+  "Salesperson-Information": {
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "id-employee": "Id Empleado",
+    "commission": "Comisión",
+    "phone": "Teléfono",
+    "email": "Email",
+    "bloqued": "Bloqueado",
+    "created-at": "Creado en",
+    "updated-at": "Actualizado en"
+  }
+}

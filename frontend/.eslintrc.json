@@ -1,0 +1,24 @@
+{
+  "extends": ["next/core-web-vitals", "prettier"],
+  "rules": {
+    "react/jsx-no-literal": "warn",
+    // Consistently import navigation APIs from `@/navigation`
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "next/link",
+        "message": "Please import from `@/navigation` instead."
+      },
+      {
+        "name": "next/navigation",
+        "importNames": [
+          "redirect",
+          "permanentRedirect",
+          "useRouter",
+          "usePathname"
+        ],
+        "message": "Please import from `@/navigation` instead."
+      }
+    ]
+  }
+}
